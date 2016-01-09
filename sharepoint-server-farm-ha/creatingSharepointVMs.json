@@ -5,177 +5,306 @@
     "spappVMName" : {
       "type" : "array"
     },
-    "spappVMNICName" : {
-      "type" : "array"
-    },
-    "spwebVMName" : {
-      "type" : "array"
-    },
-    "spwebVMNICName" : {
+    "sqlVMName" : {
       "type" : "array"
     },
     "location" : {
       "type" : "string"
     },
-    "spVMSize" : {
+    "spModulesURL" : {
       "type" : "string"
     },
-    "spWebAvailabilitySet" : {
+    "spConfigurationFunction" : {
       "type" : "string"
     },
-    "spAppAvailabilitySet" : {
+    "domainName" : {
       "type" : "string"
     },
-    "adminUsername" : {
+    "adminUserName" : {
       "type" : "string"
     },
     "adminPassword" : {
       "type" : "securestring"
     },
-    "spImagePublisher" : {
+    "sharePointSetupUserAccountUserName" : {
       "type" : "string"
     },
-    "spImageOffer" : {
+    "sharePointFarmAccountUserName" : {
       "type" : "string"
     },
-    "spImageSKU" : {
+    "sqlServerServiceAccountUserName" : {
       "type" : "string"
     },
-    "vmContainerName" : {
+    "sqlAOAGName" : {
       "type" : "string"
     },
-    "storageAccountName" : {
+    "administrationContentDatabaseName" : {
       "type" : "string"
     },
-    "storageAccountDiagName" : {
+    "contentDatabaseName" : {
+      "type" : "string"
+    },
+    "configDatabaseName" : {
+      "type" : "string"
+    },
+    "sharepointCAfqdn" : {
+      "type" : "string"
+    },
+    "sharePointSetupUserAccountPassword" : {
+      "type" : "securestring"
+    },
+    "sharePointFarmAccountPassword" : {
+      "type" : "securestring"
+    },
+    "sharePointFarmPassphrasePassword" : {
+      "type" : "securestring"
+    },
+    "sqlServerServiceAccountPassword" : {
+      "type" : "securestring"
+    },
+    "spwebVMName" : {
+      "type" : "array"
+    },
+    "sharepointFarmName" : {
+      "type" : "string"
+    },
+    "sharepointWebfqdn" : {
+      "type" : "string"
+    },
+    "spSiteTemplateName" : {
       "type" : "string"
     }
   },
   "resources": [
     {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('spappVMName')[0],'/ConfigureSPAppServer')]",
       "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[parameters('spappVMName')[copyindex()]]",
       "location": "[parameters('location')]",
-      "copy": {
-        "name": "spAppVMLoop",
-        "count": 2
-      },
       "properties": {
-        "hardwareProfile": {
-          "vmSize": "[parameters('spVMSize')]"
-        },
-        "availabilitySet": {
-          "id": "[parameters('spAppAvailabilitySet')]"
-        },
-        "osProfile": {
-          "computerName": "[parameters('spappVMName')[copyindex()]]",
-          "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
-        },
-        "storageProfile": {
-          "imageReference": {
-            "publisher": "[parameters('spImagePublisher')]",
-            "offer": "[parameters('spImageOffer')]",
-            "sku": "[parameters('spImageSKU')]",
-            "version": "latest"
-          },
-          "osDisk": {
-            "name": "osdisk",
-            "vhd": {
-              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spappVMName'), '-osdisk.vhd')]"
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.6",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "modulesURL": "[parameters('spModulesURL')]",
+          "configurationFunction": "[parameters('spConfigurationFunction')]",
+          "properties": {
+            "domainName": "[parameters('domainName')]",
+            "adminCreds":{
+              "userName": "[parameters('adminUserName')]",
+              "password": "privateSettingsRef:adminPassword"
             },
-            "caching": "ReadWrite",
-            "createOption": "FromImage"
-          },
-          "dataDisks": [
-            {
-              "vhd": {
-                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spappVMName'), '-Data-1.vhd')]"
-              },
-              "name":"[concat(parameters('spappVMName'), '-data-disk1')]",
-              "caching" : "None",
-              "createOption": "empty",
-              "diskSizeGB": 128,
-              "lun": 0
-            }
-          ]
+            "sharePointSetupUserAccountcreds":{
+              "userName": "[parameters('sharePointSetupUserAccountUserName')]",
+              "password": "privateSettingsRef:sharePointSetupUserAccountPassword"
+            },
+            "sharePointFarmAccountcreds":{
+              "userName": "[parameters('sharePointFarmAccountUserName')]",
+              "password": "privateSettingsRef:sharePointFarmAccountPassword"
+            },
+            "sharePointFarmPassphrasecreds":{
+              "userName": "ignore",
+              "password": "privateSettingsRef:sharePointFarmPassphrasePassword"
+            },
+            "sqlServiceCreds":{
+              "userName": "[parameters('sqlServerServiceAccountUserName')]",
+              "password": "privateSettingsRef:sqlServerServiceAccountPassword"
+            },
+            "databaseName":"[parameters('configDatabaseName')]",
+            "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
+            "primaryReplica":"[parameters('sqlVMName')[0]]",
+            "secondaryReplica":"[parameters('sqlVMName')[1]]",
+            "databaseNames":["[parameters('administrationContentDatabaseName')]","[parameters('configDatabaseName')]"],
+            "administrationContentDatabaseName":"[parameters('administrationContentDatabaseName')]",
+            "databaseServer":"[concat(parameters('sqlVMName')[0],'.',parameters('domainName'))]",
+            "configuration":"[concat('{\"roles\":[{\"type\":\"application\",\"properties\":{\"fqdn\":\"',parameters('sharepointCAfqdn'),'\",\"port\":80}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
+          }
         },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',parameters('spappVMName')[copyindex()])]"
-            }
-          ]
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": "true",
-	 		 		  "storageUri": "[concat('http://',parameters('storageAccountDiagName'),'.blob.core.windows.net')]"
+        "protectedSettings": {
+          "items": {
+            "adminPassword": "[parameters('adminPassword')]",
+            "sharePointSetupUserAccountPassword": "[parameters('sharePointSetupUserAccountPassword')]",
+            "sharePointFarmAccountPassword": "[parameters('sharePointFarmAccountPassword')]",
+            "sharePointFarmPassphrasePassword": "[parameters('sharePointFarmPassphrasePassword')]",
+            "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]"
           }
         }
       }
     },
     {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('spappVMName')[1],'/ConfigureSPAppServer')]",
       "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[parameters('spwebVMName')[copyindex()]]",
       "location": "[parameters('location')]",
-      "copy": {
-        "name": "spWebVMLoop",
-        "count": 2
-      },
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('spappVMName')[0],'/extensions/ConfigureSPAppServer')]"
+      ],
       "properties": {
-        "hardwareProfile": {
-          "vmSize": "[parameters('spVMSize')]"
-        },
-        "availabilitySet": {
-          "id": "[parameters('spWebAvailabilitySet')]"
-        },
-        "osProfile": {
-          "computerName": "[parameters('spwebVMName')[copyindex()]]",
-          "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
-        },
-        "storageProfile": {
-          "imageReference": {
-            "publisher": "[parameters('spImagePublisher')]",
-            "offer": "[parameters('spImageOffer')]",
-            "sku": "[parameters('spImageSKU')]",
-            "version": "latest"
-          },
-          "osDisk": {
-            "name": "osdisk",
-            "vhd": {
-              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spwebVMName'), '-osdisk.vhd')]"
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.6",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "modulesURL": "[parameters('spModulesURL')]",
+          "configurationFunction": "[parameters('spConfigurationFunction')]",
+          "properties": {
+            "domainName": "[parameters('domainName')]",
+            "adminCreds":{
+              "userName": "[parameters('adminUserName')]",
+              "password": "privateSettingsRef:adminPassword"
             },
-            "caching": "ReadWrite",
-            "createOption": "FromImage"
-          },
-          "dataDisks": [
-            {
-              "vhd": {
-                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spwebVMName'), '-Data-1.vhd')]"
-              },
-              "name":"[concat(parameters('spwebVMName'), '-data-disk1')]",
-              "caching" : "None",
-              "createOption": "empty",
-              "diskSizeGB": 128,
-              "lun": 0
-            }
-          ]
+            "sharePointSetupUserAccountcreds":{
+              "userName": "[parameters('sharePointSetupUserAccountUserName')]",
+              "password": "privateSettingsRef:sharePointSetupUserAccountPassword"
+            },
+            "sharePointFarmAccountcreds":{
+              "userName": "[parameters('sharePointFarmAccountUserName')]",
+              "password": "privateSettingsRef:sharePointFarmAccountPassword"
+            },
+            "sharePointFarmPassphrasecreds":{
+              "userName": "ignore",
+              "password": "privateSettingsRef:sharePointFarmPassphrasePassword"
+            },
+            "sqlServiceCreds":{
+              "userName": "[parameters('sqlServerServiceAccountUserName')]",
+              "password": "privateSettingsRef:sqlServerServiceAccountPassword"
+            },
+            "databaseName":"[parameters('configDatabaseName')]",
+            "administrationContentDatabaseName":"[parameters('administrationContentDatabaseName')]",
+            "databaseServer":"[concat(parameters('sqlVMName')[1],'.',parameters('domainName'))]",
+            "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
+            "primaryReplica":"[parameters('sqlVMName')[0]]",
+            "secondaryReplica":"[parameters('sqlVMName')[1]]",
+            "databaseNames":null,
+            "configuration":"[concat('{\"roles\":[{\"type\":\"application\",\"properties\":{\"fqdn\":\"',parameters('sharepointCAfqdn'),'\",\"port\":80}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
+          }
         },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',parameters('spwebVMName')[copyindex()])]"
-            }
-          ]
+        "protectedSettings": {
+          "items": {
+            "adminPassword": "[parameters('adminPassword')]",
+            "sharePointSetupUserAccountPassword": "[parameters('sharePointSetupUserAccountPassword')]",
+            "sharePointFarmAccountPassword": "[parameters('sharePointFarmAccountPassword')]",
+            "sharePointFarmPassphrasePassword": "[parameters('sharePointFarmPassphrasePassword')]",
+            "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('spwebVMName')[0],'/ConfigureSPWebServer')]",
+      "apiVersion": "2015-06-15",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('spappVMName')[1],'/extensions/ConfigureSPAppServer')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.6",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "modulesURL": "[parameters('spModulesURL')]",
+          "configurationFunction": "[parameters('spConfigurationFunction')]",
+          "properties": {
+            "domainName": "[parameters('domainName')]",
+            "adminCreds":{
+              "userName": "[parameters('adminUserName')]",
+              "password": "privateSettingsRef:adminPassword"
+            },
+            "sharePointSetupUserAccountcreds":{
+              "userName": "[parameters('sharePointSetupUserAccountUserName')]",
+              "password": "privateSettingsRef:sharePointSetupUserAccountPassword"
+            },
+            "sharePointFarmAccountcreds":{
+              "userName": "[parameters('sharePointFarmAccountUserName')]",
+              "password": "privateSettingsRef:sharePointFarmAccountPassword"
+            },
+            "sharePointFarmPassphrasecreds":{
+              "userName": "ignore",
+              "password": "privateSettingsRef:sharePointFarmPassphrasePassword"
+            },
+            "sqlServiceCreds":{
+              "userName": "[parameters('sqlServerServiceAccountUserName')]",
+              "password": "privateSettingsRef:sqlServerServiceAccountPassword"
+            },
+            "databaseName":"[parameters('configDatabaseName')]",
+            "administrationContentDatabaseName":"[parameters('administrationContentDatabaseName')]",
+            "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
+            "primaryReplica":"[parameters('sqlVMName')[0]]",
+            "secondaryReplica":"[parameters('sqlVMName')[1]]",
+            "databaseNames":"[parameters('contentDatabaseName')]",
+            "databaseServer":"[concat(parameters('sqlVMName')[1],'.',parameters('domainName'))]",
+            "configuration":"[concat('{\"roles\":[{\"type\":\"web\",\"properties\":{\"webApp\":{\"name\":\"',parameters('sharepointFarmName'),'\",\"applicationPool\":\"',parameters('sharepointFarmName'),' AppPool\",\"applicationPoolAccount\":\"', parameters('sharePointFarmAccountUserName'),'\",\"url\":\"http://',parameters('sharepointWebfqdn'),'\",\"port\":80,\"hostHeader\":\"',parameters('sharepointWebfqdn'),'\",\"databaseName\":\"',parameters('contentDatabaseName'),'\"},\"site\":{\"name\":\"',parameters('sharepointFarmName'),'\",\"template\":\"',parameters('spSiteTemplateName'),'\",\"url\":\"http://',parameters('sharepointWebfqdn'),'\",\"ownerAliasDomain\":\"',parameters('domainName'),'\",\"ownerAliasUserName\":\"',parameters('sharePointFarmAccountUserName'),'\",\"secondaryOwnerAliasDomain\":\"',parameters('domainName'),'\",\"secondaryOwnerAliasUserName\":\"',parameters('adminUserName'),'\"}}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
+          }
         },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": "true",
-	 		 		  "storageUri": "[concat('http://',parameters('storageAccountDiagName'),'.blob.core.windows.net')]"
+        "protectedSettings": {
+          "items": {
+            "adminPassword": "[parameters('adminPassword')]",
+            "sharePointSetupUserAccountPassword": "[parameters('sharePointSetupUserAccountPassword')]",
+            "sharePointFarmAccountPassword": "[parameters('sharePointFarmAccountPassword')]",
+            "sharePointFarmPassphrasePassword": "[parameters('sharePointFarmPassphrasePassword')]",
+            "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('spwebVMName')[1],'/ConfigureSPWebServer')]",
+      "apiVersion": "2015-06-15",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('spwebVMName')[0],'/extensions/ConfigureSPWebServer')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.6",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "modulesURL": "[parameters('spModulesURL')]",
+          "configurationFunction": "[parameters('spConfigurationFunction')]",
+          "properties": {
+            "domainName": "[parameters('domainName')]",
+            "adminCreds":{
+              "userName": "[parameters('adminUserName')]",
+              "password": "privateSettingsRef:adminPassword"
+            },
+            "sharePointSetupUserAccountcreds":{
+              "userName": "[parameters('sharePointSetupUserAccountUserName')]",
+              "password": "privateSettingsRef:sharePointSetupUserAccountPassword"
+            },
+            "sharePointFarmAccountcreds":{
+              "userName": "[parameters('sharePointFarmAccountUserName')]",
+              "password": "privateSettingsRef:sharePointFarmAccountPassword"
+            },
+            "sharePointFarmPassphrasecreds":{
+              "userName": "ignore",
+              "password": "privateSettingsRef:sharePointFarmPassphrasePassword"
+            },
+            "sqlServiceCreds":{
+              "userName": "[parameters('sqlServerServiceAccountUserName')]",
+              "password": "privateSettingsRef:sqlServerServiceAccountPassword"
+            },
+            "databaseName":"[parameters('configDatabaseName')]",
+            "administrationContentDatabaseName":"[parameters('administrationContentDatabaseName')]",
+            "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
+            "primaryReplica":"[parameters('sqlVMName')[0]]",
+            "secondaryReplica":"[parameters('sqlVMName')[1]]",
+            "databaseNames":null,
+            "databaseServer":"[concat(parameters('sqlVMName')[1],'.',parameters('domainName'))]",
+            "configuration":"[concat('{\"roles\":[{\"type\":\"web\",\"properties\":{\"webApp\":{\"name\":\"',parameters('sharepointFarmName'),'\",\"applicationPool\":\"',parameters('sharepointFarmName'),' AppPool\",\"applicationPoolAccount\":\"', parameters('sharePointFarmAccountUserName'),'\",\"url\":\"http://',parameters('sharepointWebfqdn'),'\",\"port\":80,\"hostHeader\":\"',parameters('sharepointWebfqdn'),'\",\"databaseName\":\"',parameters('contentDatabaseName'),'\"},\"site\":{\"name\":\"',parameters('sharepointFarmName'),'\",\"template\":\"',parameters('spSiteTemplateName'),'\",\"url\":\"http://',parameters('sharepointWebfqdn'),'\",\"ownerAliasDomain\":\"',parameters('domainName'),'\",\"ownerAliasUserName\":\"',parameters('sharePointFarmAccountUserName'),'\",\"secondaryOwnerAliasDomain\":\"',parameters('domainName'),'\",\"secondaryOwnerAliasUserName\":\"',parameters('adminUserName'),'\"}}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
+          }
+        },
+        "protectedSettings": {
+          "items": {
+            "adminPassword": "[parameters('adminPassword')]",
+            "sharePointSetupUserAccountPassword": "[parameters('sharePointSetupUserAccountPassword')]",
+            "sharePointFarmAccountPassword": "[parameters('sharePointFarmAccountPassword')]",
+            "sharePointFarmPassphrasePassword": "[parameters('sharePointFarmPassphrasePassword')]",
+            "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]"
           }
         }
       }
