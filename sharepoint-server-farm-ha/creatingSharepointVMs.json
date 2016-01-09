@@ -3,10 +3,16 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "spappVMName" : {
-      "type" : "string"
+      "type" : "array"
+    },
+    "spappVMNICName" : {
+      "type" : "array"
     },
     "spwebVMName" : {
-      "type" : "string"
+      "type" : "array"
+    },
+    "spwebVMNICName" : {
+      "type" : "array"
     },
     "location" : {
       "type" : "string"
@@ -38,7 +44,10 @@
     "vmContainerName" : {
       "type" : "string"
     },
-    "storageAccountNamePrefix" : {
+    "storageAccountName" : {
+      "type" : "string"
+    },
+    "storageAccountDiagName" : {
       "type" : "string"
     }
   },
@@ -46,7 +55,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('spappVMName'), copyindex())]",
+      "name": "[parameters('spappVMName')[copyindex()]]",
       "location": "[parameters('location')]",
       "copy": {
         "name": "spAppVMLoop",
@@ -60,7 +69,7 @@
           "id": "[parameters('spAppAvailabilitySet')]"
         },
         "osProfile": {
-          "computerName": "[concat(parameters('spappVMName'), copyindex())]",
+          "computerName": "[parameters('spappVMName')[copyindex()]]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -74,7 +83,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('storageAccountNamePrefix'),'2.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spappVMName'), copyindex(),'-osdisk.vhd')]"
+              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spappVMName'), '-osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -82,9 +91,9 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri":"[concat('http://',parameters('storageAccountNamePrefix'),'2.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spappVMName'), copyindex(), '-Data-1.vhd')]"
+                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spappVMName'), '-Data-1.vhd')]"
               },
-              "name":"[concat(parameters('spappVMName'), copyindex(),'-data-disk1')]",
+              "name":"[concat(parameters('spappVMName'), '-data-disk1')]",
               "caching" : "None",
               "createOption": "empty",
               "diskSizeGB": 128,
@@ -95,14 +104,14 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('spappVMName'), copyindex(),'-nic'))]"
+              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',parameters('spappVMName')[copyindex()])]"
             }
           ]
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
             "enabled": "true",
-	 		 		  "storageUri": "[concat('http://',parameters('storageAccountNamePrefix'),'diag.blob.core.windows.net')]"
+	 		 		  "storageUri": "[concat('http://',parameters('storageAccountDiagName'),'.blob.core.windows.net')]"
           }
         }
       }
@@ -110,7 +119,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('spwebVMName'), copyindex())]",
+      "name": "[parameters('spwebVMName')[copyindex()]]",
       "location": "[parameters('location')]",
       "copy": {
         "name": "spWebVMLoop",
@@ -124,7 +133,7 @@
           "id": "[parameters('spWebAvailabilitySet')]"
         },
         "osProfile": {
-          "computerName": "[concat(parameters('spwebVMName'), copyindex())]",
+          "computerName": "[parameters('spwebVMName')[copyindex()]]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -138,7 +147,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('storageAccountNamePrefix'),'2.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spwebVMName'), copyindex(),'-osdisk.vhd')]"
+              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spwebVMName'), '-osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -146,9 +155,9 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri":"[concat('http://',parameters('storageAccountNamePrefix'),'2.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spwebVMName'), copyindex(), '-Data-1.vhd')]"
+                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spwebVMName'), '-Data-1.vhd')]"
               },
-              "name":"[concat(parameters('spwebVMName'), copyindex(),'-data-disk1')]",
+              "name":"[concat(parameters('spwebVMName'), '-data-disk1')]",
               "caching" : "None",
               "createOption": "empty",
               "diskSizeGB": 128,
@@ -159,14 +168,14 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('spwebVMName'), copyindex(),'-nic'))]"
+              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',parameters('spwebVMName')[copyindex()])]"
             }
           ]
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
             "enabled": "true",
-	 		 		  "storageUri": "[concat('http://',parameters('storageAccountNamePrefix'),'diag.blob.core.windows.net')]"
+	 		 		  "storageUri": "[concat('http://',parameters('storageAccountDiagName'),'.blob.core.windows.net')]"
           }
         }
       }
