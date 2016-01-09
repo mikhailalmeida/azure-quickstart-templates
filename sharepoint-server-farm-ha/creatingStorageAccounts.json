@@ -2,8 +2,11 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "storageAccountNamePrefix" : {
-      "type" : "string"
+    "storageAccountName": {
+      "type": "array"
+    },
+    "storageAccountDiagName": {
+      "type": "string"
     },
     "location" : {
       "type" : "string"
@@ -15,7 +18,7 @@
   "resources": [
   {
     "type": "Microsoft.Storage/storageAccounts",
-    "name": "[concat(parameters('storageAccountNamePrefix'), copyindex())]",
+    "name": "[parameters('storageAccountName')[copyindex()]]",
     "apiVersion": "2015-05-01-preview",
     "location": "[parameters('location')]",
     "copy": {
@@ -28,7 +31,7 @@
   },
   {
     "type": "Microsoft.Storage/storageAccounts",
-    "name": "[concat(parameters('storageAccountNamePrefix'), 'diag')]",
+    "name": "[parameters('storageAccountDiagName')]",
     "apiVersion": "2015-05-01-preview",
     "location": "[parameters('location')]",
     "properties": {
