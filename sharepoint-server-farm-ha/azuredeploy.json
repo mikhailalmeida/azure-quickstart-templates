@@ -52,6 +52,290 @@
          },
          "defaultValue":"Standard_DS1"
       },
+      "rdpIPAddressName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the RDP IP address"
+        },
+        "defaultValue": "rdp-ip"
+      },
+      "rdpLoadBalancerName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the RDP Load Balancer"
+        },
+        "defaultValue": "rdpLoadBalancer"
+      },
+      "rdpLoadBalancerFEName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the RDP Load Balancer Frontend"
+        },
+        "defaultValue": "rdpLBFE"
+      },
+      "adLoadBalancerBEName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the AD Load Balancer Backend"
+        },
+        "defaultValue": "adLBBE"
+      },
+      "adPDCVMName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the primary AD domain controller VM"
+        },
+        "defaultValue": "ad-pdc"
+      },
+      "adPDCNicName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the primary AD domain controller NIC"
+        },
+        "defaultValue": "ad-pdc-nic"
+      },
+      "adBDCVMName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the backup AD domain controller VM"
+        },
+        "defaultValue": "ad-bdc"
+      },
+      "adBDCNicName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the backup AD domain controller NIC"
+        },
+        "defaultValue": "ad-bdc-nic"
+      },
+      "staticSubnetName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the static subnet for SQL Load Balancer and AD"
+        },
+        "defaultValue": "staticSubnet"
+      },
+      "sqlSubnetName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the subnet for SQL"
+        },
+        "defaultValue": "sqlSubnet"
+      },
+      "spWebSubnetName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the subnet for Web Sharepoint"
+        },
+        "defaultValue": "spWebSubnet"
+      },
+      "spAppSubnetName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the static subnet for App Sharepoint"
+        },
+        "defaultValue": "spAppSubnet"
+      },
+      "spCALoadBalancerName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the Central Admin Sharepoint Load Balancer"
+        },
+        "defaultValue": "spCALoadBalancer"
+      },
+      "spCALoadBalancerFEName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the Central Admin Sharepoint Frontend Load Balancer"
+        },
+        "defaultValue": "spCALBFE"
+      },
+      "spCALoadBalancerBEName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the Central Admin Sharepoint Backend Load Balancer"
+        },
+        "defaultValue": "spCALBBE"
+      },
+      "spCANAT":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the Sharepoint NAT"
+        },
+        "defaultValue": "spCANAT"
+      },
+      "spWebLoadBalancerName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the Sharepoint Web Load Balancer"
+        },
+        "defaultValue": "spWebLoadBalancer"
+      },
+      "spWebLoadBalancerFEName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the Sharepoint Web Frontend Load Balancer"
+        },
+        "defaultValue": "spWebLBFE"
+      },
+      "spWebLoadBalancerBEName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the Sharepoint Web Backend Load Balancer"
+        },
+        "defaultValue": "spWebLBBE"
+      },
+      "spWebLoadBalancerRuleName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the Sharepoint Web Load Balancer Rule"
+        },
+        "defaultValue": "spWeb"
+      },
+      "spWebProbeName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the Sharepoint Web Proble"
+        },
+        "defaultValue": "spWebProbe"
+      },
+      "sqlLoadBalancerName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Load Balancer"
+        },
+        "defaultValue": "sqlLoadBalancer"
+      },
+      "sqlLoadBalancerFEName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Frontend Load Balancer"
+        },
+        "defaultValue": "sqlLBFE"
+      },
+      "sqlLoadBalancerBEName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Backend Load Balancer"
+        },
+        "defaultValue": "sqlLBBE"
+      },
+      "sqlProbeName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Probe"
+        },
+        "defaultValue": "SQLAlwaysOnEndPointProbe"
+      },
+      "sqlVMNICName":{
+         "type":"array",
+        "metadata": {
+          "description": "The name of the SQL VM NIC"
+        },
+        "defaultValue": [
+          "sql-0-nic",
+          "sql-1-nic"
+        ]
+      },
+      "spWebVMNICName":{
+         "type":"array",
+        "metadata": {
+          "description": "The name of the SharePoint Web VM NIC"
+        },
+        "defaultValue": [
+          "sps-web-0-nic",
+          "sps-web-1-nic"
+        ]
+      },
+      "spAppVMNICName":{
+         "type":"array",
+        "metadata": {
+          "description": "The name of the SharePoint App VM NIC"
+        },
+        "defaultValue": [
+          "sps-app-0-nic",
+          "sps-app-1-nic"
+        ]
+      },
+      "sqlWitnessVMName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Witness VM"
+        },
+        "defaultValue": "sql-w"
+      },
+      "sqlWitnessVMNICName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Witness VM NIC"
+        },
+        "defaultValue": "sql-w-nic"
+      },
+      "sqlVMName":{
+         "type":"array",
+        "metadata": {
+          "description": "The name of the SQL VM"
+        },
+        "defaultValue": [
+          "sql-0",
+          "sql-1"
+        ]
+      },
+      "sqlAOEPName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Always On End Point"
+        },
+        "defaultValue": "[concat(parameters('dnsPrefix'),'-hadr')]"
+      },
+      "sqlClusterName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Cluster"
+        },
+        "defaultValue": "[concat(parameters('dnsPrefix'),'-fc')]"
+      },
+      "sqlSharePathName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Share Path"
+        },
+        "defaultValue": "[concat(parameters('dnsPrefix'),'-fsw')]"
+      },
+      "sqlAOAGName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Always On Availability Group"
+        },
+        "defaultValue": "[concat(parameters('dnsPrefix'),'-ag')]"
+      },
+      "sqlAOListenerName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Always On Listener"
+        },
+        "defaultValue": "[concat(parameters('dnsPrefix'),'ag-listener')]"
+      },
+      "spWebVMName":{
+         "type":"array",
+        "metadata": {
+          "description": "The name of the SharePoint Web VM"
+        },
+        "defaultValue": [
+          "sps-web-0",
+          "sps-web-1"
+        ]
+      },
+      "spAppVMName":{
+         "type":"array",
+        "metadata": {
+          "description": "The name of the SharePoint App VM"
+        },
+        "defaultValue": [
+          "sps-app-0",
+          "sps-app-1"
+        ]
+      },
       "sqlVMSize":{
          "type":"string",
          "allowedValues":[
@@ -186,11 +470,17 @@
          },
          "defaultValue":"STS#0"
       },
-      "storageAccountNamePrefix":{
-         "type":"string",
+      "storageAccountName":{
+         "type":"array",
          "metadata":{
-            "description":"The prefix of the new storage account created to store the VMs disks, different storage accounts will be created for AD,SQL and Sharepoint VMs"
+            "description":"The name of the new storage account created to store the VMs disks, different storage accounts will be created for AD - index 0,SQL - index 1 and Sharepoint VMs - index 2"
          }
+      },
+      "storageAccountDiagName":{
+         "type": "string",
+         "metadata":{
+            "description": "The name of the new storage account for diagnostics with standard locally redundant storage"
+        }
       },
       "storageAccountType":{
          "type":"string",
@@ -198,6 +488,34 @@
             "description":"The type of the Storage Account created"
          },
          "defaultValue":"Premium_LRS"
+      },
+      "availabilitySetADName":{
+         "type": "string",
+         "metadata":{
+            "description": "The name of the availability set for AD"
+        },
+        "defaultValue": "adAvailabilitySet"
+      },
+      "availabilitySetSQLName":{
+         "type": "string",
+         "metadata":{
+            "description": "The name of the availability set for SQL"
+        },
+        "defaultValue": "sqlAvailabilitySet"
+      },
+      "availabilitySetSPWebName":{
+         "type": "string",
+         "metadata":{
+            "description": "The name of the availability set for Sharepoint Web"
+        },
+        "defaultValue": "spWebAvailabilitySet"
+      },
+      "availabilitySetSPAppName":{
+         "type": "string",
+         "metadata":{
+            "description": "The name of the availability set for SharePoint App"
+        },
+        "defaultValue": "spAppAvailabilitySet"
       },
       "virtualNetworkAddressRange":{
          "type":"string",
@@ -268,6 +586,13 @@
             "description":"The existing IP address name for SP Web"
          }
       },
+      "spWebAdminIPAddressName":{
+         "type":"string",
+         "metadata":{
+            "description":"The existing IP address name for SP Admin Web"
+         },
+         "defaultValue": "[concat(parameters('spWebIPAddressName'),'admin')]"
+      },
       "spWebIPNewOrExisting":{
          "type":"string",
          "defaultValue":"new",
@@ -284,6 +609,13 @@
          "metadata":{
             "description":"The DNS Prefix for the Public IP Address for the Sharepoint Web Application"
          }
+      },
+      "dnsAdminPrefix":{
+         "type":"string",
+         "metadata":{
+            "description":"The DNS Prefix for the Public IP Address for the Sharepoint Admin Web Application"
+         },
+         "defaultValue": "[concat(parameters('dnsPrefix'),'admin')]"
       },
       "virtualNetworkName" : {
         "type" : "string",
@@ -302,55 +634,12 @@
       }
    },
    "variables":{
-      "spCADNSPrefix" : "[concat(parameters('dnsPrefix'),'admin')]",
-      "spCAIPAddressName" : "[concat(parameters('spWebIPAddressName'),'admin')]",
       "configDatabaseName":"SP_Config",
       "administrationContentDatabaseName":"SP_AdminContent",
       "contentDatabaseName":"spfarm_Content",
-      "lbSettings":{
-         "rdpLBFE":"rdpLBFE",
-         "sqlLBFE":"sqlLBFE",
-         "spWebLBFE":"spWebLBFE",
-         "spCALBFE":"spCALBFE",
-         "adLBBE":"adLBBE",
-         "sqlLBBE":"sqlLBBE",
-         "spWebLBBE":"spWebLBBE",
-         "spCALBBE":"spCALBBE",
-         "spWebLB":"spWeb",
-         "spCALB":"spCALB",
-         "sqlLBName":"sqlLoadBalancer",
-         "rdpLBName":"rdpLoadBalancer",
-         "spWebLBName":"spWebLoadBalancer",
-         "spCALBName":"spCALoadBalancer"
-      },
-      "subnetNames":{
-         "staticSubnetName":"staticSubnet",
-         "sqlSubnetName":"sqlSubnet",
-         "spWebSubnetName":"spWebSubnet",
-         "spAppSubnetName":"spAppSubnet"
-      },
       "RDPNAT":"RDP",
-      "spCANAT":"spCANAT",
-      "SQLAOProbe":"SQLAlwaysOnEndPointProbe",
-      "spWebProbe":"spWebProbe",
-      "spWebProbePort":8088,
-      "rdpIPAddressName":"rdpIP",
       "vmSettings":{
-         "availabilitySets":{
-            "sqlAvailabilitySetName":"sqlAvailabilitySet",
-            "adAvailabilitySetName":"adAvailabilitySet",
-            "spWebAvailabilitySetName":"spWebAvailabilitySet",
-            "spAppAvailabilitySetName":"spAppAvailabilitySet"
-         },
-         "noOfSqlVMs":2,
-         "noOfspRoleVMs":2,
          "vmContainerName":"vhds",
-         "adPDCVMName":"ad-pdc",
-         "adBDCVMName":"ad-bdc",
-         "sqlVMName":"sql-",
-         "sqlwVMName":"sql-w",
-         "spwebVMName":"sps-web-",
-         "spappVMName":"sps-app-",
          "windowsImagePublisher":"MicrosoftWindowsServer",
          "windowsImageOffer":"WindowsServer",
          "windowsImageSKU":"2012-R2-Datacenter",
@@ -359,69 +648,55 @@
          "sqlImageSKU":"Enterprise",
          "spImagePublisher":"MicrosoftSharePoint",
          "spImageOffer":"MicrosoftSharePointServer",
-         "spImageSKU":"2013",
-         "rdpPort":3389,
-         "spCentralAdminPort":80,
-         "windowsDiskSize":128,
-         "sqlDiskSize":1000,
-         "spDiskSize":128
+         "spImageSKU":"2013"
       },
-      "sqlAOEPName":"[concat(parameters('dnsPrefix'),'-hadr')]",
-      "sqlAOAGName":"[concat(parameters('dnsPrefix'),'-ag')]",
-      "sqlAOListenerName":"[concat(parameters('dnsPrefix'),'ag-listener')]",
-      "sharePath":"[concat(parameters('dnsPrefix'),'-fsw')]",
-      "clusterName":"[concat(parameters('dnsPrefix'),'-fc')]",
-      "adPDCNicName":"[concat(variables('vmSettings').adPDCVMName,'-nic')]",
-      "adBDCNicName":"[concat(variables('vmSettings').adBDCVMName,'-nic')]",
-      "sqlwNicName":"[concat(variables('vmSettings').sqlwVMName,'-nic')]",
       "VnetID":"[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-      "staticSubnetRef":"[concat(variables('VnetID'),'/subnets/',variables('subnetNames').staticSubnetName)]",
-      "sqlSubnetRef":"[concat(variables('VnetID'),'/subnets/',variables('subnetNames').sqlSubnetName)]",
-      "spWebSubnetRef":"[concat(variables('VnetID'),'/subnets/',variables('subnetNames').spWebSubnetName)]",
-      "spAppSubnetRef":"[concat(variables('VnetID'),'/subnets/',variables('subnetNames').spAppSubnetName)]",
+      "staticSubnetRef":"[concat(variables('VnetID'),'/subnets/',parameters('staticSubnetName'))]",
+      "sqlSubnetRef":"[concat(variables('VnetID'),'/subnets/',parameters('sqlSubnetName'))]",
+      "spWebSubnetRef":"[concat(variables('VnetID'),'/subnets/',parameters('spWebSubnetName'))]",
+      "spAppSubnetRef":"[concat(variables('VnetID'),'/subnets/',parameters('spAppSubnetName'))]",
       "ids":{
-         "adNicId":"[resourceId('Microsoft.Network/networkInterfaces',variables('adPDCNicName'))]",
-         "rdplbID":"[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').rdpLBName)]",
-         "spWeblbID":"[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').spWebLBName)]",
-         "sqllbID":"[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').sqlLBName)]",
-         "spCAlbID":"[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').spCALBName)]"
+         "adNicId":"[resourceId('Microsoft.Network/networkInterfaces',parameters('adPDCNicName'))]",
+         "rdplbID":"[resourceId('Microsoft.Network/loadBalancers',parameters('rdpLoadBalancerName'))]",
+         "spWeblbID":"[resourceId('Microsoft.Network/loadBalancers',parameters('spWebLoadBalancerName'))]",
+         "sqllbID":"[resourceId('Microsoft.Network/loadBalancers',parameters('sqlLoadBalancerName'))]",
+         "spCAlbID":"[resourceId('Microsoft.Network/loadBalancers',parameters('spCALoadBalancerName'))]"
       },
       "derivedIds":{
-         "adIPConfigID":"[concat(variables('ids').adNicId,'/ipConfigurations/ipconfig1')]",
-         "rdplbFEConfigID":"[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',variables('lbSettings').rdpLBFE)]",
-         "spWebLBFEConfigID":"[concat(variables('ids').spWeblbID,'/frontendIPConfigurations/',variables('lbSettings').spWebLBFE)]",
+         "rdplbFEConfigID":"[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',parameters('rdpLoadBalancerFEName'))]",
+         "spWebLBFEConfigID":"[concat(variables('ids').spWeblbID,'/frontendIPConfigurations/',parameters('spWebLoadBalancerFEName'))]",
          "adRDPNATRuleID":"[concat(variables('ids').rdplbID,'/inboundNatRules/',variables('RDPNAT'))]",
-         "adBEAddressPoolID":"[concat(variables('ids').rdplbID,'/backendAddressPools/',variables('lbSettings').adLBBE)]",
-         "spWebProbeID":"[concat(variables('ids').spWeblbID,'/probes/',variables('spWebProbe'))]",
-         "spWebBEAddressPoolID":"[concat(variables('ids').spWeblbID,'/backendAddressPools/',variables('lbSettings').spWebLBBE)]",
-         "sqlBEAddressPoolID":"[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
-         "sqllbFEConfigID":"[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE)]",
-         "sqllbProbeID":"[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]",
-         "spCABEAddressPoolID":"[concat(variables('ids').spCAlbID,'/backendAddressPools/',variables('lbSettings').spCALBBE)]",
-         "spCAlbFEConfigID":"[concat(variables('ids').spCAlbID,'/frontendIPConfigurations/',variables('lbSettings').spCALBFE)]",
-         "spCANATRuleID":"[concat(variables('ids').spCAlbID,'/inboundNatRules/',variables('spCANAT'))]"
+         "adBEAddressPoolID":"[concat(variables('ids').rdplbID,'/backendAddressPools/',parameters('adLoadBalancerBEName'))]",
+         "spWebProbeID":"[concat(variables('ids').spWeblbID,'/probes/',parameters('spWebProbeName'))]",
+         "spWebBEAddressPoolID":"[concat(variables('ids').spWeblbID,'/backendAddressPools/',parameters('spWebLoadBalancerBEName'))]",
+         "sqlBEAddressPoolID":"[concat(variables('ids').sqllbID,'/backendAddressPools/',parameters('sqlLoadBalancerBEName'))]",
+         "sqllbFEConfigID":"[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',parameters('sqlLoadBalancerFEName'))]",
+         "sqllbProbeID":"[concat(variables('ids').sqllbID,'/probes/',parameters('sqlProbeName'))]",
+         "spCABEAddressPoolID":"[concat(variables('ids').spCAlbID,'/backendAddressPools/',parameters('spCALoadBalancerBEName'))]",
+         "spCAlbFEConfigID":"[concat(variables('ids').spCAlbID,'/frontendIPConfigurations/',parameters('spCALoadBalancerFEName'))]",
+         "spCANATRuleID":"[concat(variables('ids').spCAlbID,'/inboundNatRules/',parameters('spCANAT'))]"
       },
       "subnets":[
          {
-            "name":"[variables('subnetNames').staticSubnetName]",
+            "name":"[parameters('staticSubnetName')]",
             "properties":{
                "addressPrefix":"[parameters('staticSubnet')]"
             }
          },
          {
-            "name":"[variables('subnetNames').sqlSubnetName]",
+            "name":"[parameters('sqlSubnetName')]",
             "properties":{
                "addressPrefix":"[parameters('sqlSubnet')]"
             }
          },
          {
-            "name":"[variables('subnetNames').spWebSubnetName]",
+            "name":"[parameters('spWebSubnetName')]",
             "properties":{
                "addressPrefix":"[parameters('spWebSubnet')]"
             }
          },
          {
-            "name":"[variables('subnetNames').spAppSubnetName]",
+            "name":"[parameters('spAppSubnetName')]",
             "properties":{
                "addressPrefix":"[parameters('spAppSubnet')]"
             }
@@ -474,9 +749,12 @@
                "location":{
                   "value":"[parameters('location')]"
                },
-               "storageAccountNamePrefix":{
-                  "value":"[parameters('storageAccountNamePrefix')]"
+               "storageAccountName":{
+                  "value":"[parameters('storageAccountName')]"
                },
+               "storageAccountDiagName": {
+                  "value": "[parameters('storageAccountDiagName')]"
+              },
                "storageAccountType":{
                   "value":"[parameters('storageAccountType')]"
                }
@@ -498,16 +776,16 @@
                   "value":"[parameters('location')]"
                },
                "rdpIPAddressName":{
-                  "value":"[variables('rdpIPAddressName')]"
+                  "value":"[parameters('rdpIPAddressName')]"
                },
                "rdpLBName":{
-                  "value":"[variables('lbSettings').rdpLBName]"
+                  "value":"[parameters('rdpLoadBalancerName')]"
                },
                "rdpLBFE":{
-                  "value":"[variables('lbSettings').rdpLBFE]"
+                  "value":"[parameters('rdpLoadBalancerFEName')]"
                },
                "adLBBE":{
-                  "value":"[variables('lbSettings').adLBBE]"
+                  "value":"[parameters('adLoadBalancerBEName')]"
                },
                "RDPNAT":{
                   "value":"[variables('RDPNAT')]"
@@ -562,13 +840,13 @@
                   "value":"[parameters('location')]"
                },
                "publicIPAddressName":{
-                  "value":"[variables('spCAIPAddressName')]"
+                  "value":"[parameters('spWebAdminIPAddressName')]"
                },
                "publicIPAddressType":{
                   "value":"dynamic"
                },
                "dnsPrefix":{
-                  "value":"[variables('spCADNSPrefix')]"
+                  "value":"[parameters('dnsAdminPrefix')]"
                },
                "publicIpRGName":{
                   "value":"[resourceGroup().name]"
@@ -591,16 +869,16 @@
                   "value":"[parameters('location')]"
                },
                "adAvailabilitySetName":{
-                  "value":"[variables('vmSettings').availabilitySets.adAvailabilitySetName]"
+                  "value":"[parameters('availabilitySetADName')]"
                },
                "sqlAvailabilitySetName":{
-                  "value":"[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
+                  "value":"[parameters('availabilitySetSQLName')]"
                },
                "spWebAvailabilitySetName":{
-                  "value":"[variables('vmSettings').availabilitySets.spWebAvailabilitySetName]"
+                  "value":"[parameters('availabilitySetSPWebName')]"
                },
                "spAppAvailabilitySetName":{
-                  "value":"[variables('vmSettings').availabilitySets.spAppAvailabilitySetName]"
+                  "value":"[parameters('availabilitySetSPAppName')]"
                }
             }
          }
@@ -652,37 +930,37 @@
                   "value":"[parameters('location')]"
                },
                "spCALBName":{
-                  "value":"[variables('lbSettings').spCALBName]"
+                  "value":"[parameters('spCALoadBalancerName')]"
                },
                "spCALBFE":{
-                  "value":"[variables('lbSettings').spCALBFE]"
+                  "value":"[parameters('spCALoadBalancerFEName')]"
                },
                "spCAResourceId":{
                   "value":"[reference('SettingUpSharepointCentralAdminPublicIP').outputs.resourceId.value]"
                },
                "spCALBBE":{
-                  "value":"[variables('lbSettings').spCALBBE]"
+                  "value":"[parameters('spCALoadBalancerBEName')]"
                },
                "spCANAT":{
-                  "value":"[variables('spCANAT')]"
+                  "value":"[parameters('spCANAT')]"
                },
                "spCAlbFEConfigID":{
                   "value":"[variables('derivedIds').spCAlbFEConfigID]"
                },
                "spWebLBName":{
-                  "value":"[variables('lbSettings').spWebLBName]"
+                  "value":"[parameters('spWebLoadBalancerName')]"
                },
                "spWebLBFE":{
-                  "value":"[variables('lbSettings').spWebLBFE]"
+                  "value":"[parameters('spWebLoadBalancerFEName')]"
                },
                "spWebResourceId":{
                   "value":"[reference('SettingUpSharepointWebPublicIP').outputs.resourceId.value]"
                },
                "spWebLBBE":{
-                  "value":"[variables('lbSettings').spWebLBBE]"
+                  "value":"[parameters('spWebLoadBalancerFEName')]"
                },
                "spWebLB":{
-                  "value":"[variables('lbSettings').spWebLB]"
+                  "value":"[parameters('spWebLoadBalancerRuleName')]"
                },
                "spWebLBFEConfigID":{
                   "value":"[variables('derivedIds').spWebLBFEConfigID]"
@@ -694,13 +972,13 @@
                   "value":"[variables('derivedIds').spWebProbeID]"
                },
                "spWebProbe":{
-                  "value":"[variables('spWebProbe')]"
+                  "value":"[parameters('spWebProbeName')]"
                },
                "sqlLBName":{
-                  "value":"[variables('lbSettings').sqlLBName]"
+                  "value":"[parameters('sqlLoadBalancerName')]"
                },
                "sqlLBFE":{
-                  "value":"[variables('lbSettings').sqlLBFE]"
+                  "value":"[parameters('sqlLoadBalancerFEName')]"
                },
                "sqlLBIPAddress":{
                   "value":"[parameters('sqlLBIPAddress')]"
@@ -709,7 +987,7 @@
                   "value":"[variables('staticSubnetRef')]"
                },
                "sqlLBBE":{
-                  "value":"[variables('lbSettings').sqlLBBE]"
+                  "value":"[parameters('sqlLoadBalancerBEName')]"
                },
                "sqllbFEConfigID":{
                   "value":"[variables('derivedIds').sqllbFEConfigID]"
@@ -718,7 +996,7 @@
                   "value":"[variables('derivedIds').sqllbProbeID]"
                },
                "SQLAOProbe":{
-                  "value":"[variables('SQLAOProbe')]"
+                  "value":"[parameters('sqlProbeName')]"
                }
             }
          }
@@ -743,7 +1021,7 @@
                   "value":"[parameters('location')]"
                },
                "adPDCNicName":{
-                  "value":"[variables('adPDCNicName')]"
+                  "value":"[parameters('adPDCNicName')]"
                },
                "adPDCNICIPAddress":{
                   "value":"[parameters('adPDCNICIPAddress')]"
@@ -758,13 +1036,13 @@
                   "value":"[variables('derivedIds').adRDPNATRuleID]"
                },
                "adBDCNicName":{
-                  "value":"[variables('adBDCNicName')]"
+                  "value":"[parameters('adBDCNicName')]"
                },
                "adBDCNICIPAddress":{
                   "value":"[parameters('adBDCNICIPAddress')]"
                },
-               "sqlVMName":{
-                  "value":"[variables('vmSettings').sqlVMName]"
+               "sqlVMNICName":{
+                  "value":"[parameters('sqlVMNICName')]"
                },
                "sqlSubnetRef":{
                   "value":"[variables('sqlSubnetRef')]"
@@ -772,8 +1050,8 @@
                "sqlBEAddressPoolID":{
                   "value":"[variables('derivedIds').sqlBEAddressPoolID]"
                },
-               "spwebVMName":{
-                  "value":"[variables('vmSettings').spwebVMName]"
+               "spwebVMNICName":{
+                  "value":"[parameters('spWebVMNICName')]"
                },
                "spWebSubnetRef":{
                   "value":"[variables('spWebSubnetRef')]"
@@ -781,8 +1059,8 @@
                "spWebBEAddressPoolID":{
                   "value":"[variables('derivedIds').spWebBEAddressPoolID]"
                },
-               "spappVMName":{
-                  "value":"[variables('vmSettings').spappVMName]"
+               "spappVMNICName":{
+                  "value":"[parameters('spAppVMNICName')]"
                },
                "spAppSubnetRef":{
                   "value":"[variables('spAppSubnetRef')]"
@@ -794,7 +1072,7 @@
                   "value":"[variables('derivedIds').spCANATRuleID]"
                },
                "sqlwNicName":{
-                  "value":"[variables('sqlwNicName')]"
+                  "value":"[parameters('sqlWitnessVMNICName')]"
                }
             }
          }
@@ -817,13 +1095,16 @@
             },
             "parameters":{
                "adPDCVMName":{
-                  "value":"[variables('vmSettings').adPDCVMName]"
+                  "value":"[parameters('adPDCVMName')]"
                },
                "location":{
                   "value":"[parameters('location')]"
                },
-               "storageAccountNamePrefix":{
-                  "value":"[parameters('storageAccountNamePrefix')]"
+               "storageAccountName": {
+                  "value": "[parameters('storageAccountName')[0]]"
+               },
+               "storageAccountDiagName": {
+                  "value": "[parameters('storageAccountDiagName')]"
                },
                "availabilitySet":{
                   "value":"[reference('CreatingAvailabilitySets').outputs.adAvailabilitySetName.value]"
@@ -850,7 +1131,7 @@
                   "value":"[variables('vmSettings').vmContainerName]"
                },
                "adPDCNicName":{
-                  "value":"[variables('adPDCNicName')]"
+                  "value":"[parameters('adPDCNicName')]"
                },
                "domainName":{
                   "value":"[parameters('domainName')]"
@@ -916,13 +1197,16 @@
             },
             "parameters":{
                "adBDCVMName":{
-                  "value":"[variables('vmSettings').adBDCVMName]"
+                  "value":"[parameters('adBDCVMName')]"
                },
                "location":{
                   "value":"[parameters('location')]"
                },
                "storageAccountNamePrefix":{
-                  "value":"[parameters('storageAccountNamePrefix')]"
+                  "value":"[parameters('storageAccountName')[0]]"
+               },
+               "storageAccountDiagName": {
+                  "value": "[parameters('storageAccountDiagName')]"
                },
                "availabilitySet":{
                   "value":"[reference('CreatingAvailabilitySets').outputs.adAvailabilitySetName.value]"
@@ -949,7 +1233,7 @@
                   "value":"[variables('vmSettings').vmContainerName]"
                },
                "adBDCNicName":{
-                  "value":"[variables('adBDCNicName')]"
+                  "value":"[parameters('adBDCNicName')]"
                },
                "domainName":{
                   "value":"[parameters('domainName')]"
@@ -1016,13 +1300,19 @@
             },
             "parameters":{
                "sqlVMName":{
-                  "value":"[variables('vmSettings').sqlVMName]"
+                  "value":"[parameters('sqlVMName')]"
+               },
+               "sqlVMNICName":{
+                  "value":"[parameters('sqlVMNICName')]"
                },
                "location":{
                   "value":"[parameters('location')]"
                },
-               "storageAccountNamePrefix":{
-                  "value":"[parameters('storageAccountNamePrefix')]"
+               "storageAccountName":{
+                  "value":"[parameters('storageAccountName')[1]]"
+               },
+               "storageAccountDiagName":{
+                  "value":"[parameters('storageAccountDiagName')]"
                },
                "availabilitySet":{
                   "value":"[reference('CreatingAvailabilitySets').outputs.sqlAvailabilitySetName.value]"
@@ -1067,7 +1357,7 @@
                   "value":"[variables('configuration').sqlAOPrepareConfigurationFunction]"
                },
                "sqlAOEPName":{
-                  "value":"[variables('sqlAOEPName')]"
+                  "value":"[parameters('sqlAOEPName')]"
                },
                "sqlServerServiceAccountUserName":{
                   "value":"[parameters('sqlServerServiceAccountUserName')]"
@@ -1088,34 +1378,34 @@
                   "value":"[variables('configuration').createClusterConfigurationFunction]"
                },
                "clusterName":{
-                  "value":"[variables('clusterName')]"
+                  "value":"[parameters('sqlClusterName')]"
                },
                "sharePath":{
-                  "value":"[variables('sharePath')]"
+                  "value":"[parameters('sqlSharePathName')]"
                },
                "sqlAOAGName":{
-                  "value":"[variables('sqlAOAGName')]"
+                  "value":"[parameters('sqlAOAGName')]"
                },
                "sqlAOListenerName":{
-                  "value":"[variables('sqlAOListenerName')]"
+                "value": "[parameters('sqlAOListenerName')]"
                },
                "sqlLBName":{
-                  "value":"[variables('lbSettings').sqlLBName]"
+                  "value":"[parameters('sqlLoadBalancerName')]"
                },
                "sqlLBIPAddress":{
                   "value":"[parameters('sqlLBIPAddress')]"
                },
                "adPDCVMName":{
-                  "value":"[variables('vmSettings').adPDCVMName]"
+                  "value":"[parameters('adPDCVMName')]"
                },
                "witnessVMSize":{
                   "value":"[parameters('witnessVMSize')]"
                },
                "sqlwVMName":{
-                  "value":"[variables('vmSettings').sqlwVMName]"
+                  "value":"[parameters('sqlWitnessVMName')]"
                },
                "sqlwNicName":{
-                  "value":"[variables('sqlwNicName')]"
+                  "value":"[parameters('sqlWitnessVMNICName')]"
                },
                "fswModulesURL":{
                   "value":"[variables('configuration').fswModulesURL]"
@@ -1142,13 +1432,16 @@
             },
             "parameters":{
                "sqlVMName":{
-                  "value":"[variables('vmSettings').sqlVMName]"
+                  "value":"[parameters('sqlVMName')]"
                },
                "location":{
                   "value":"[parameters('location')]"
                },
-               "storageAccountNamePrefix":{
-                  "value":"[parameters('storageAccountNamePrefix')]"
+               "storageAccountName":{
+                  "value":"[parameters('storageAccountName')[1]]"
+               },
+               "storageAccountDiagName":{
+                  "value":"[parameters('storageAccountDiagName')]"
                },
                "availabilitySet":{
                   "value":"[reference('CreatingAvailabilitySets').outputs.sqlAvailabilitySetName.value]"
@@ -1193,7 +1486,7 @@
                   "value":"[variables('configuration').sqlAOPrepareConfigurationFunction]"
                },
                "sqlAOEPName":{
-                  "value":"[variables('sqlAOEPName')]"
+                  "value":"[parameters('sqlAOEPName')]"
                },
                "sqlServerServiceAccountUserName":{
                   "value":"[parameters('sqlServerServiceAccountUserName')]"
@@ -1214,34 +1507,34 @@
                   "value":"[variables('configuration').createClusterConfigurationFunction]"
                },
                "clusterName":{
-                  "value":"[variables('clusterName')]"
+                  "value":"[parameters('sqlClusterName')]"
                },
                "sharePath":{
-                  "value":"[variables('sharePath')]"
+                  "value":"[parameters('sqlSharePathName')]"
                },
                "sqlAOAGName":{
-                  "value":"[variables('sqlAOAGName')]"
+                  "value":"[parameters('sqlAOAGName')]"
                },
                "sqlAOListenerName":{
-                  "value":"[variables('sqlAOListenerName')]"
+                  "value":"[parameters('sqlAOListenerName')]"
                },
                "sqlLBName":{
-                  "value":"[variables('lbSettings').sqlLBName]"
+                  "value":"[parameters('sqlLoadBalancerName')]"
                },
                "sqlLBIPAddress":{
                   "value":"[parameters('sqlLBIPAddress')]"
                },
                "adPDCVMName":{
-                  "value":"[variables('vmSettings').adPDCVMName]"
+                  "value":"[parameters('adPDCVMName')]"
                },
                "witnessVMSize":{
                   "value":"[parameters('witnessVMSize')]"
                },
                "sqlwVMName":{
-                  "value":"[variables('vmSettings').sqlwVMName]"
+                  "value":"[parameters('sqlWitnessVMName')]"
                },
                "sqlwNicName":{
-                  "value":"[variables('sqlwNicName')]"
+                  "value":"[parameters('sqlWitnessVMNICName')]"
                },
                "fswModulesURL":{
                   "value":"[variables('configuration').fswModulesURL]"
@@ -1270,7 +1563,7 @@
                   "value":"[parameters('location')]"
                },
                "nicName":{
-                  "value":"[variables('sqlwNicName')]"
+                  "value":"[parameters('sqlWitnessVMNICName')]"
                },
                "ipConfigurations":{
                   "value":[
@@ -1312,7 +1605,7 @@
                   "value":"[parameters('location')]"
                },
                "nicName":{
-                  "value":"[concat(variables('vmSettings').sqlVMName, '0-nic')]"
+                  "value":"[parameters('sqlVMNICName')[0]]"
                },
                "ipConfigurations":{
                   "value":[
@@ -1359,7 +1652,7 @@
                   "value":"[parameters('location')]"
                },
                "nicName":{
-                  "value":"[concat(variables('vmSettings').sqlVMName, '1-nic')]"
+                  "value":"[parameters('sqlVMNICName')[1]]"
                },
                "ipConfigurations":{
                   "value":[
@@ -1406,10 +1699,16 @@
             },
             "parameters":{
                "spappVMName":{
-                  "value":"[variables('vmSettings').spappVMName]"
+                  "value":"[parameters('spAppVMName')]"
+               },
+               "spappVMNICName":{
+                  "value":"[parameters('spAppVMNICName')]"
                },
                "spwebVMName":{
-                  "value":"[variables('vmSettings').spwebVMName]"
+                  "value":"[parameters('spWebVMName')]"
+               },
+               "spwebVMNICName":{
+                  "value":"[parameters('spWebVMNICName')]"
                },
                "location":{
                   "value":"[parameters('location')]"
@@ -1441,8 +1740,11 @@
                "vmContainerName":{
                   "value":"[variables('vmSettings').vmContainerName]"
                },
-               "storageAccountNamePrefix":{
-                  "value":"[parameters('storageAccountNamePrefix')]"
+               "storageAccountName":{
+                  "value":"[parameters('storageAccountName')[2]]"
+               },
+               "storageAccountDiagName":{
+                  "value":"[parameters('storageAccountDiagName')]"
                }
             }
          }
@@ -1463,10 +1765,10 @@
             },
             "parameters":{
                "spappVMName":{
-                  "value":"[variables('vmSettings').spappVMName]"
+                  "value":"[parameters('spAppVMName')]"
                },
                "sqlVMName":{
-                  "value":"[variables('vmSettings').sqlVMName]"
+                  "value":"[parameters('spWebVMName')]"
                },
                "location":{
                   "value":"[parameters('location')]"
@@ -1496,7 +1798,7 @@
                   "value":"[parameters('sqlServerServiceAccountUserName')]"
                },
                "sqlAOAGName":{
-                  "value":"[variables('sqlAOAGName')]"
+                  "value":"[parameters('sqlAOAGName')]"
                },
                "administrationContentDatabaseName":{
                   "value":"[variables('administrationContentDatabaseName')]"
@@ -1523,7 +1825,7 @@
                   "value":"[parameters('sqlServerServiceAccountPassword')]"
                },
                "spwebVMName":{
-                  "value":"[variables('vmSettings').spwebVMName]"
+                  "value":"[parameters('spWebVMName')]"
                },
                "sharepointFarmName":{
                   "value":"[parameters('sharepointFarmName')]"
