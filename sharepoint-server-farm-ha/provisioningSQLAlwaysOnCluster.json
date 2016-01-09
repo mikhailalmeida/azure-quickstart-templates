@@ -3,12 +3,15 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "sqlVMName": {
-      "type": "string"
+      "type": "array"
     },
     "location": {
       "type": "string"
     },
-    "storageAccountNamePrefix": {
+    "storageAccountName": {
+      "type": "string"
+    },
+    "storageAccountDiagName": {
       "type": "string"
     },
     "availabilitySet" : {
@@ -144,7 +147,7 @@
     },
   {
     "type": "Microsoft.Compute/virtualMachines/extensions",
-    "name": "[concat(parameters('sqlVMName'),'0/sqlAOPrepare')]",
+    "name": "[concat(parameters('sqlVMName')[0],'/sqlAOPrepare')]",
     "apiVersion": "2015-06-15",
     "location": "[parameters('location')]",
     "dependsOn":[
@@ -186,11 +189,11 @@
   },
   {
     "type": "Microsoft.Compute/virtualMachines/extensions",
-    "name": "[concat(parameters('sqlVMName'),'1/CreateCluster')]",
+    "name": "[concat(parameters('sqlVMName')[1],'/CreateCluster')]",
     "apiVersion": "2015-06-15",
     "location": "[parameters('location')]",
     "dependsOn":[
-      "[concat('Microsoft.Compute/virtualMachines/',parameters('sqlVMName'),'0/extensions/sqlAOPrepare')]"
+      "[concat('Microsoft.Compute/virtualMachines/',parameters('sqlVMName')[0],'/extensions/sqlAOPrepare')]"
     ],
     "properties": {
       "publisher": "Microsoft.Powershell",
@@ -204,7 +207,7 @@
           "domainName": "[parameters('domainName')]",
           "clusterName":"[parameters('clusterName')]",
           "sharePath":"[concat('\\\\',parameters('sqlwVMName'),'\\',parameters('sharePath'))]",
-          "nodes":["[concat(parameters('sqlVMName'),'0')]","[concat(parameters('sqlVMName'),'1')]"],
+          "nodes":["[(parameters('sqlVMName')[0]]","[parameters('sqlVMName')[1]]"],
           "sqlAlwaysOnEndpointName":"[parameters('sqlAOEPName')]",
           "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
           "sqlAlwaysOnAvailabilityGroupListenerName":"[parameters('sqlAOListenerName')]",
@@ -212,8 +215,8 @@
           "databaseNames":null,
           "lbName":"[parameters('sqlLBName')]",
           "lbAddress":"[parameters('sqlLBIPAddress')]",
-          "primaryReplica":"[concat(parameters('sqlVMName'),'1')]",
-          "secondaryReplica":"[concat(parameters('sqlVMName'),'0')]",
+          "primaryReplica":"[parameters('sqlVMName')[0]]",
+          "secondaryReplica":"[parameters('sqlVMName')[1]]",
           "dnsServerName":"[parameters('adPDCVMName')]",
           "adminCreds":{
             "userName": "[parameters('adminUserName')]",
