@@ -215,8 +215,8 @@
           "databaseNames":null,
           "lbName":"[parameters('sqlLBName')]",
           "lbAddress":"[parameters('sqlLBIPAddress')]",
-          "primaryReplica":"[parameters('sqlVMName')[0]]",
-          "secondaryReplica":"[parameters('sqlVMName')[1]]",
+          "primaryReplica":"[parameters('sqlVMName')[1]]",
+          "secondaryReplica":"[parameters('sqlVMName')[0]]",
           "dnsServerName":"[parameters('adPDCVMName')]",
           "adminCreds":{
             "userName": "[parameters('adminUserName')]",
