@@ -209,7 +209,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('sqlVMName'), '-osdisk.vhd')]"
+              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('sqlVMName')[copyindex()], '-osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -217,9 +217,9 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('sqlVMName'), '-Data-1.vhd')]"
+                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('sqlVMName')[copyindex()], '-Data-1.vhd')]"
               },
-              "name":"[concat(parameters('sqlVMName'), '-data-disk1')]",
+              "name":"[concat(parameters('sqlVMName')[copyindex()], '-data-disk1')]",
               "caching" : "None",
               "createOption": "empty",
               "diskSizeGB": 1000,
@@ -227,9 +227,9 @@
             },
             {
               "vhd": {
-                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('sqlVMName'), '-log.vhd')]"
+                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('sqlVMName')[copyindex()], '-log.vhd')]"
               },
-              "name":"[concat(parameters('sqlVMName'), '-log-disk1')]",
+              "name":"[concat(parameters('sqlVMName')[copyindex()], '-log-disk1')]",
               "caching" : "None",
               "createOption": "empty",
               "diskSizeGB": 1000,
