@@ -1202,7 +1202,7 @@
                "location":{
                   "value":"[parameters('location')]"
                },
-               "storageAccountNamePrefix":{
+               "storageAccountName":{
                   "value":"[parameters('storageAccountName')[0]]"
                },
                "storageAccountDiagName": {
