@@ -8,49 +8,24 @@
             "description":"The region to deploy the resources into"
          }
       },
-      "sharepointFarmName":{
-         "type":"string",
+      "storageAccountName":{
+         "type":"array",
          "metadata":{
-            "description":"The name of the Sharepoint farm"
-         },
-         "defaultValue":"spfarm"
-      },
-      "adminUsername":{
-         "type":"string",
-         "metadata":{
-            "description":"The name of the Administrator of the new VMs and Domain"
+            "description":"The name of the new storage account created to store the VMs disks, different storage accounts will be created for AD - index 0,SQL - index 1 and Sharepoint VMs - index 2"
          }
       },
-      "adminPassword":{
-         "type":"securestring",
+      "storageAccountDiagName":{
+         "type": "string",
          "metadata":{
-            "description":"The password for the Administrator account of the new VMs and Domain"
-         }
+            "description": "The name of the new storage account for diagnostics with standard locally redundant storage"
+        }
       },
-      "adVMSize":{
+      "storageAccountType":{
          "type":"string",
-         "allowedValues":[
-            "Standard_D1",
-            "Standard_DS1",
-            "Standard_D2",
-            "Standard_DS2",
-            "Standard_D3",
-            "Standard_DS3",
-            "Standard_D4",
-            "Standard_DS4",
-            "Standard_D11",
-            "Standard_DS11",
-            "Standard_D12",
-            "Standard_DS12",
-            "Standard_D13",
-            "Standard_DS13",
-            "Standard_D14",
-            "Standard_DS14"
-         ],
          "metadata":{
-            "description":"The size of the AD VMs Created"
+            "description":"The type of the Storage Account created"
          },
-         "defaultValue":"Standard_DS1"
+         "defaultValue":"Premium_LRS"
       },
       "rdpIPAddressName":{
          "type":"string",
@@ -80,61 +55,80 @@
         },
         "defaultValue": "adLBBE"
       },
-      "adPDCVMName":{
+      "spWebIPAddressName":{
          "type":"string",
-        "metadata": {
-          "description": "The name of the primary AD domain controller VM"
-        },
-        "defaultValue": "ad-pdc"
+         "metadata":{
+            "description":"The existing IP address name for SP Web"
+         }
       },
-      "adPDCNicName":{
+      "dnsPrefix":{
          "type":"string",
-        "metadata": {
-          "description": "The name of the primary AD domain controller NIC"
-        },
-        "defaultValue": "ad-pdc-nic"
+         "metadata":{
+            "description":"The DNS Prefix for the Public IP Address for the Sharepoint Web Application"
+         }
       },
-      "adBDCVMName":{
+      "spWebIPRGName":{
          "type":"string",
-        "metadata": {
-          "description": "The name of the backup AD domain controller VM"
-        },
-        "defaultValue": "ad-bdc"
+         "defaultValue":"",
+         "metadata":{
+            "description":"Resource Group containing existing SP Web IP address"
+         }
       },
-      "adBDCNicName":{
+      "spWebAdminIPAddressName":{
          "type":"string",
-        "metadata": {
-          "description": "The name of the backup AD domain controller NIC"
-        },
-        "defaultValue": "ad-bdc-nic"
+         "metadata":{
+            "description":"The existing IP address name for SP Admin Web"
+         },
+         "defaultValue": "[concat(parameters('spWebIPAddressName'),'admin')]"
       },
-      "staticSubnetName":{
+      "dnsAdminPrefix":{
          "type":"string",
-        "metadata": {
-          "description": "The name of the static subnet for SQL Load Balancer and AD"
-        },
-        "defaultValue": "staticSubnet"
+         "metadata":{
+            "description":"The DNS Prefix for the Public IP Address for the Sharepoint Admin Web Application"
+         },
+         "defaultValue": "[concat(parameters('dnsPrefix'),'admin')]"
       },
-      "sqlSubnetName":{
-         "type":"string",
-        "metadata": {
-          "description": "The name of the subnet for SQL"
+      "availabilitySetADName":{
+         "type": "string",
+         "metadata":{
+            "description": "The name of the availability set for AD"
         },
-        "defaultValue": "sqlSubnet"
+        "defaultValue": "adAvailabilitySet"
       },
-      "spWebSubnetName":{
-         "type":"string",
-        "metadata": {
-          "description": "The name of the subnet for Web Sharepoint"
+      "availabilitySetSQLName":{
+         "type": "string",
+         "metadata":{
+            "description": "The name of the availability set for SQL"
         },
-        "defaultValue": "spWebSubnet"
+        "defaultValue": "sqlAvailabilitySet"
       },
-      "spAppSubnetName":{
-         "type":"string",
-        "metadata": {
-          "description": "The name of the static subnet for App Sharepoint"
+      "availabilitySetSPWebName":{
+         "type": "string",
+         "metadata":{
+            "description": "The name of the availability set for Sharepoint Web"
         },
-        "defaultValue": "spAppSubnet"
+        "defaultValue": "spWebAvailabilitySet"
+      },
+      "availabilitySetSPAppName":{
+         "type": "string",
+         "metadata":{
+            "description": "The name of the availability set for SharePoint App"
+        },
+        "defaultValue": "spAppAvailabilitySet"
+      },
+      "virtualNetworkName" : {
+        "type" : "string",
+        "defaultValue" : "spfarmhaVNET",
+        "metadata":{
+           "description":"Name of virtual network to be created"
+        }
+      },
+      "virtualNetworkAddressRange":{
+         "type":"string",
+         "metadata":{
+            "description":"The address range of the new VNET in CIDR format"
+         },
+         "defaultValue":"10.0.0.0/16"
       },
       "spCALoadBalancerName":{
          "type":"string",
@@ -213,6 +207,27 @@
         },
         "defaultValue": "sqlLBFE"
       },
+      "sqlLBIPAddress":{
+         "type":"string",
+         "metadata":{
+            "description":"The IP address of the new SQL ILB"
+         },
+         "defaultValue":"10.0.0.6"
+      },
+      "staticSubnetName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the static subnet for SQL Load Balancer and AD"
+        },
+        "defaultValue": "staticSubnet"
+      },
+      "staticSubnet":{
+         "type":"string",
+         "metadata":{
+            "description":"The address range of the subnet static IPs are allocated from in the new VNET"
+         },
+         "defaultValue":"10.0.0.0/24"
+      },
       "sqlLoadBalancerBEName":{
          "type":"string",
         "metadata": {
@@ -227,6 +242,34 @@
         },
         "defaultValue": "SQLAlwaysOnEndPointProbe"
       },
+      "adPDCNicName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the primary AD domain controller NIC"
+        },
+        "defaultValue": "ad-pdc-nic"
+      },
+      "adPDCNICIPAddress":{
+         "type":"string",
+         "metadata":{
+            "description":"The IP address of the new AD VM"
+         },
+         "defaultValue":"10.0.0.4"
+      },
+      "adBDCNicName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the backup AD domain controller NIC"
+        },
+        "defaultValue": "ad-bdc-nic"
+      },
+      "adBDCNICIPAddress":{
+         "type":"string",
+         "metadata":{
+            "description":"The IP address of the new AD VM"
+         },
+         "defaultValue":"10.0.0.5"
+      },
       "sqlVMNICName":{
          "type":"array",
         "metadata": {
@@ -236,6 +279,20 @@
           "sql-0-nic",
           "sql-1-nic"
         ]
+      },
+      "sqlSubnetName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the subnet for SQL"
+        },
+        "defaultValue": "sqlSubnet"
+      },
+      "sqlSubnet":{
+         "type":"string",
+         "metadata":{
+            "description":"The address range of the SQL subnet created in the new VNET"
+         },
+         "defaultValue":"10.0.1.0/24"
       },
       "spWebVMNICName":{
          "type":"array",
@@ -247,6 +304,20 @@
           "sps-web-1-nic"
         ]
       },
+      "spWebSubnetName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the subnet for Web Sharepoint"
+        },
+        "defaultValue": "spWebSubnet"
+      },
+      "spWebSubnet":{
+         "type":"string",
+         "metadata":{
+            "description":"The address range of the SP Web subnet created in the new VNET"
+         },
+         "defaultValue":"10.0.2.0/24"
+      },
       "spAppVMNICName":{
          "type":"array",
         "metadata": {
@@ -257,12 +328,19 @@
           "sps-app-1-nic"
         ]
       },
-      "sqlWitnessVMName":{
+      "spAppSubnetName":{
          "type":"string",
         "metadata": {
-          "description": "The name of the SQL Witness VM"
+          "description": "The name of the static subnet for App Sharepoint"
         },
-        "defaultValue": "sql-w"
+        "defaultValue": "spAppSubnet"
+      },
+      "spAppSubnet":{
+         "type":"string",
+         "metadata":{
+            "description":"The address range of the SP App subnet created in the new VNET"
+         },
+         "defaultValue":"10.0.3.0/24"
       },
       "sqlWitnessVMNICName":{
          "type":"string",
@@ -270,6 +348,64 @@
           "description": "The name of the SQL Witness VM NIC"
         },
         "defaultValue": "sql-w-nic"
+      },
+      "adPDCVMName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the primary AD domain controller VM"
+        },
+        "defaultValue": "ad-pdc"
+      },
+      "adVMSize":{
+         "type":"string",
+         "allowedValues":[
+            "Standard_D1",
+            "Standard_DS1",
+            "Standard_D2",
+            "Standard_DS2",
+            "Standard_D3",
+            "Standard_DS3",
+            "Standard_D4",
+            "Standard_DS4",
+            "Standard_D11",
+            "Standard_DS11",
+            "Standard_D12",
+            "Standard_DS12",
+            "Standard_D13",
+            "Standard_DS13",
+            "Standard_D14",
+            "Standard_DS14"
+         ],
+         "metadata":{
+            "description":"The size of the AD VMs Created"
+         },
+         "defaultValue":"Standard_DS1"
+      },
+      "adminUsername":{
+         "type":"string",
+         "metadata":{
+            "description":"The name of the Administrator of the new VMs and Domain"
+         }
+      },
+      "adminPassword":{
+         "type":"securestring",
+         "metadata":{
+            "description":"The password for the Administrator account of the new VMs and Domain"
+         }
+      },
+      "domainName":{
+         "type":"string",
+         "metadata":{
+            "description":"The FQDN of the AD Domain created "
+         },
+         "defaultValue":"sphafarm.local"
+      },
+      "adBDCVMName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the backup AD domain controller VM"
+        },
+        "defaultValue": "ad-bdc"
       },
       "sqlVMName":{
          "type":"array",
@@ -281,12 +417,63 @@
           "sql-1"
         ]
       },
+      "sqlVMSize":{
+         "type":"string",
+         "allowedValues":[
+            "Standard_D1",
+            "Standard_DS1",
+            "Standard_D2",
+            "Standard_DS2",
+            "Standard_D3",
+            "Standard_DS3",
+            "Standard_D4",
+            "Standard_DS4",
+            "Standard_D11",
+            "Standard_DS11",
+            "Standard_D12",
+            "Standard_DS12",
+            "Standard_D13",
+            "Standard_DS13",
+            "Standard_D14",
+            "Standard_DS14"
+         ],
+         "metadata":{
+            "description":"The size of the SQL VMs Created"
+         },
+         "defaultValue":"Standard_DS3"
+      },
       "sqlAOEPName":{
          "type":"string",
         "metadata": {
           "description": "The name of the SQL Always On End Point"
         },
         "defaultValue": "[concat(parameters('dnsPrefix'),'-hadr')]"
+      },
+      "sqlServerServiceAccountUserName":{
+         "type":"string",
+         "metadata":{
+            "description":"The SQL Server Service account name"
+         },
+         "defaultValue":"sqlservice"
+      },
+      "sqlServerServiceAccountPassword":{
+         "type":"securestring",
+         "metadata":{
+            "description":"The SQL Server Service account password"
+         }
+      },
+      "sharePointSetupUserAccountUserName":{
+         "type":"string",
+         "metadata":{
+            "description":"The Sharepoint Setup account name"
+         },
+         "defaultValue":"sp_setup"
+      },
+      "sharePointSetupUserAccountPassword":{
+         "type":"securestring",
+         "metadata":{
+            "description":"The Sharepoint Setup account password"
+         }
       },
       "sqlClusterName":{
          "type":"string",
@@ -316,51 +503,6 @@
         },
         "defaultValue": "[concat(parameters('dnsPrefix'),'ag-listener')]"
       },
-      "spWebVMName":{
-         "type":"array",
-        "metadata": {
-          "description": "The name of the SharePoint Web VM"
-        },
-        "defaultValue": [
-          "sps-web-0",
-          "sps-web-1"
-        ]
-      },
-      "spAppVMName":{
-         "type":"array",
-        "metadata": {
-          "description": "The name of the SharePoint App VM"
-        },
-        "defaultValue": [
-          "sps-app-0",
-          "sps-app-1"
-        ]
-      },
-      "sqlVMSize":{
-         "type":"string",
-         "allowedValues":[
-            "Standard_D1",
-            "Standard_DS1",
-            "Standard_D2",
-            "Standard_DS2",
-            "Standard_D3",
-            "Standard_DS3",
-            "Standard_D4",
-            "Standard_DS4",
-            "Standard_D11",
-            "Standard_DS11",
-            "Standard_D12",
-            "Standard_DS12",
-            "Standard_D13",
-            "Standard_DS13",
-            "Standard_D14",
-            "Standard_DS14"
-         ],
-         "metadata":{
-            "description":"The size of the SQL VMs Created"
-         },
-         "defaultValue":"Standard_DS3"
-      },
       "witnessVMSize":{
          "type":"string",
          "allowedValues":[
@@ -385,6 +527,33 @@
             "description":"The size of the Witness VM Created"
          },
          "defaultValue":"Standard_DS1"
+      },
+      "sqlWitnessVMName":{
+         "type":"string",
+        "metadata": {
+          "description": "The name of the SQL Witness VM"
+        },
+        "defaultValue": "sql-w"
+      },
+      "spAppVMName":{
+         "type":"array",
+        "metadata": {
+          "description": "The name of the SharePoint App VM"
+        },
+        "defaultValue": [
+          "sps-app-0",
+          "sps-app-1"
+        ]
+      },
+      "spWebVMName":{
+         "type":"array",
+        "metadata": {
+          "description": "The name of the SharePoint Web VM"
+        },
+        "defaultValue": [
+          "sps-web-0",
+          "sps-web-1"
+        ]
       },
       "spVMSize":{
          "type":"string",
@@ -411,39 +580,6 @@
          },
          "defaultValue":"Standard_DS2"
       },
-      "domainName":{
-         "type":"string",
-         "metadata":{
-            "description":"The FQDN of the AD Domain created "
-         },
-         "defaultValue":"sphafarm.local"
-      },
-      "sqlServerServiceAccountUserName":{
-         "type":"string",
-         "metadata":{
-            "description":"The SQL Server Service account name"
-         },
-         "defaultValue":"sqlservice"
-      },
-      "sqlServerServiceAccountPassword":{
-         "type":"securestring",
-         "metadata":{
-            "description":"The SQL Server Service account password"
-         }
-      },
-      "sharePointSetupUserAccountUserName":{
-         "type":"string",
-         "metadata":{
-            "description":"The Sharepoint Setup account name"
-         },
-         "defaultValue":"sp_setup"
-      },
-      "sharePointSetupUserAccountPassword":{
-         "type":"securestring",
-         "metadata":{
-            "description":"The Sharepoint Setup account password"
-         }
-      },
       "sharePointFarmAccountUserName":{
          "type":"string",
          "metadata":{
@@ -463,135 +599,19 @@
             "description":"The Sharepoint Farm Passphrase"
          }
       },
+      "sharepointFarmName":{
+         "type":"string",
+         "metadata":{
+            "description":"The name of the Sharepoint farm"
+         },
+         "defaultValue":"spfarm"
+      },
       "spSiteTemplateName":{
          "type":"string",
          "metadata":{
             "description":"The Sharepoint Content Site Template Name"
          },
          "defaultValue":"STS#0"
-      },
-      "storageAccountName":{
-         "type":"array",
-         "metadata":{
-            "description":"The name of the new storage account created to store the VMs disks, different storage accounts will be created for AD - index 0,SQL - index 1 and Sharepoint VMs - index 2"
-         }
-      },
-      "storageAccountDiagName":{
-         "type": "string",
-         "metadata":{
-            "description": "The name of the new storage account for diagnostics with standard locally redundant storage"
-        }
-      },
-      "storageAccountType":{
-         "type":"string",
-         "metadata":{
-            "description":"The type of the Storage Account created"
-         },
-         "defaultValue":"Premium_LRS"
-      },
-      "availabilitySetADName":{
-         "type": "string",
-         "metadata":{
-            "description": "The name of the availability set for AD"
-        },
-        "defaultValue": "adAvailabilitySet"
-      },
-      "availabilitySetSQLName":{
-         "type": "string",
-         "metadata":{
-            "description": "The name of the availability set for SQL"
-        },
-        "defaultValue": "sqlAvailabilitySet"
-      },
-      "availabilitySetSPWebName":{
-         "type": "string",
-         "metadata":{
-            "description": "The name of the availability set for Sharepoint Web"
-        },
-        "defaultValue": "spWebAvailabilitySet"
-      },
-      "availabilitySetSPAppName":{
-         "type": "string",
-         "metadata":{
-            "description": "The name of the availability set for SharePoint App"
-        },
-        "defaultValue": "spAppAvailabilitySet"
-      },
-      "virtualNetworkAddressRange":{
-         "type":"string",
-         "metadata":{
-            "description":"The address range of the new VNET in CIDR format"
-         },
-         "defaultValue":"10.0.0.0/16"
-      },
-      "staticSubnet":{
-         "type":"string",
-         "metadata":{
-            "description":"The address range of the subnet static IPs are allocated from in the new VNET"
-         },
-         "defaultValue":"10.0.0.0/24"
-      },
-      "sqlSubnet":{
-         "type":"string",
-         "metadata":{
-            "description":"The address range of the SQL subnet created in the new VNET"
-         },
-         "defaultValue":"10.0.1.0/24"
-      },
-      "spWebSubnet":{
-         "type":"string",
-         "metadata":{
-            "description":"The address range of the SP Web subnet created in the new VNET"
-         },
-         "defaultValue":"10.0.2.0/24"
-      },
-      "spAppSubnet":{
-         "type":"string",
-         "metadata":{
-            "description":"The address range of the SP App subnet created in the new VNET"
-         },
-         "defaultValue":"10.0.3.0/24"
-      },
-      "adPDCNICIPAddress":{
-         "type":"string",
-         "metadata":{
-            "description":"The IP address of the new AD VM"
-         },
-         "defaultValue":"10.0.0.4"
-      },
-      "adBDCNICIPAddress":{
-         "type":"string",
-         "metadata":{
-            "description":"The IP address of the new AD VM"
-         },
-         "defaultValue":"10.0.0.5"
-      },
-      "sqlLBIPAddress":{
-         "type":"string",
-         "metadata":{
-            "description":"The IP address of the new SQL ILB"
-         },
-         "defaultValue":"10.0.0.6"
-      },
-      "spWebIPRGName":{
-         "type":"string",
-         "defaultValue":"",
-         "metadata":{
-            "description":"Resource Group containing existing SP Web IP address"
-         }
-      },
-      "spWebIPAddressName":{
-         "type":"string",
-         "metadata":{
-            "description":"The existing IP address name for SP Web"
-         }
-      },
-      "spWebAdminIPAddressName":{
-         "type":"string",
-         "metadata":{
-            "description":"The existing IP address name for SP Admin Web"
-         },
-         "defaultValue": "[concat(parameters('spWebIPAddressName'),'admin')]"
       },
       "spWebIPNewOrExisting":{
          "type":"string",
@@ -603,26 +623,6 @@
          "metadata":{
             "description":"Indicates whether the Sharepoint farm's IP is new or existing"
          }
-      },
-      "dnsPrefix":{
-         "type":"string",
-         "metadata":{
-            "description":"The DNS Prefix for the Public IP Address for the Sharepoint Web Application"
-         }
-      },
-      "dnsAdminPrefix":{
-         "type":"string",
-         "metadata":{
-            "description":"The DNS Prefix for the Public IP Address for the Sharepoint Admin Web Application"
-         },
-         "defaultValue": "[concat(parameters('dnsPrefix'),'admin')]"
-      },
-      "virtualNetworkName" : {
-        "type" : "string",
-        "defaultValue" : "spfarmhaVNET",
-        "metadata":{
-           "description":"Name of virtual network to be created"
-        }
       },
       "baseUrl":{
          "type":"string",
@@ -957,7 +957,7 @@
                   "value":"[reference('SettingUpSharepointWebPublicIP').outputs.resourceId.value]"
                },
                "spWebLBBE":{
-                  "value":"[parameters('spWebLoadBalancerFEName')]"
+                  "value":"[parameters('spWebLoadBalancerBEName')]"
                },
                "spWebLB":{
                   "value":"[parameters('spWebLoadBalancerRuleName')]"
