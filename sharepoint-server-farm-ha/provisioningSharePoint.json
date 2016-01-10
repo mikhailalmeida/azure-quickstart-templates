@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "spappVMName" : {
-      "type" : "string"
+      "type" : "array"
     },
     "sqlVMName" : {
-      "type" : "string"
+      "type" : "array"
     },
     "location" : {
       "type" : "string"
@@ -63,7 +63,7 @@
       "type" : "securestring"
     },
     "spwebVMName" : {
-      "type" : "string"
+      "type" : "array"
     },
     "sharepointFarmName" : {
       "type" : "string"
@@ -78,7 +78,7 @@
   "resources": [
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spappVMName'),'0/ConfigureSPAppServer')]",
+      "name": "[concat(parameters('spappVMName')[0],'/ConfigureSPAppServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "properties": {
@@ -113,11 +113,11 @@
             },
             "databaseName":"[parameters('configDatabaseName')]",
             "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
-            "primaryReplica":"[concat(parameters('sqlVMName'),'1')]",
-            "secondaryReplica":"[concat(parameters('sqlVMName'),'0')]",
+            "primaryReplica":"[parameters('sqlVMName')[1]]",
+            "secondaryReplica":"[parameters('sqlVMName')[0]]",
             "databaseNames":["[parameters('administrationContentDatabaseName')]","[parameters('configDatabaseName')]"],
             "administrationContentDatabaseName":"[parameters('administrationContentDatabaseName')]",
-            "databaseServer":"[concat(parameters('sqlVMName'),'1.',parameters('domainName'))]",
+            "databaseServer":"[concat(parameters('sqlVMName')[1],'.',parameters('domainName'))]",
             "configuration":"[concat('{\"roles\":[{\"type\":\"application\",\"properties\":{\"fqdn\":\"',parameters('sharepointCAfqdn'),'\",\"port\":80}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
           }
         },
@@ -134,11 +134,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spappVMName'),'1/ConfigureSPAppServer')]",
+      "name": "[concat(parameters('spappVMName')[1],'/ConfigureSPAppServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', parameters('spappVMName'),'0','/extensions/ConfigureSPAppServer')]"
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('spappVMName')[0],'/extensions/ConfigureSPAppServer')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -172,10 +172,10 @@
             },
             "databaseName":"[parameters('configDatabaseName')]",
             "administrationContentDatabaseName":"[parameters('administrationContentDatabaseName')]",
-            "databaseServer":"[concat(parameters('sqlVMName'),'1.',parameters('domainName'))]",
+            "databaseServer":"[concat(parameters('sqlVMName')[1],'.',parameters('domainName'))]",
             "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
-            "primaryReplica":"[concat(parameters('sqlVMName'),'1')]",
-            "secondaryReplica":"[concat(parameters('sqlVMName'),'0')]",
+            "primaryReplica":"[parameters('sqlVMName')[1]]",
+            "secondaryReplica":"[parameters('sqlVMName')[0]]",
             "databaseNames":null,
             "configuration":"[concat('{\"roles\":[{\"type\":\"application\",\"properties\":{\"fqdn\":\"',parameters('sharepointCAfqdn'),'\",\"port\":80}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
           }
@@ -193,11 +193,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spwebVMName'),'0/ConfigureSPWebServer')]",
+      "name": "[concat(parameters('spwebVMName')[0],'/ConfigureSPWebServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', parameters('spappVMName'),'1/extensions/ConfigureSPAppServer')]"
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('spappVMName')[1],'/extensions/ConfigureSPAppServer')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -232,10 +232,10 @@
             "databaseName":"[parameters('configDatabaseName')]",
             "administrationContentDatabaseName":"[parameters('administrationContentDatabaseName')]",
             "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
-            "primaryReplica":"[concat(parameters('sqlVMName'),'1')]",
-            "secondaryReplica":"[concat(parameters('sqlVMName'),'0')]",
+            "primaryReplica":"[parameters('sqlVMName')[1]]",
+            "secondaryReplica":"[parameters('sqlVMName')[0]]",
             "databaseNames":"[parameters('contentDatabaseName')]",
-            "databaseServer":"[concat(parameters('sqlVMName'),'1.',parameters('domainName'))]",
+            "databaseServer":"[concat(parameters('sqlVMName')[1],'.',parameters('domainName'))]",
             "configuration":"[concat('{\"roles\":[{\"type\":\"web\",\"properties\":{\"webApp\":{\"name\":\"',parameters('sharepointFarmName'),'\",\"applicationPool\":\"',parameters('sharepointFarmName'),' AppPool\",\"applicationPoolAccount\":\"', parameters('sharePointFarmAccountUserName'),'\",\"url\":\"http://',parameters('sharepointWebfqdn'),'\",\"port\":80,\"hostHeader\":\"',parameters('sharepointWebfqdn'),'\",\"databaseName\":\"',parameters('contentDatabaseName'),'\"},\"site\":{\"name\":\"',parameters('sharepointFarmName'),'\",\"template\":\"',parameters('spSiteTemplateName'),'\",\"url\":\"http://',parameters('sharepointWebfqdn'),'\",\"ownerAliasDomain\":\"',parameters('domainName'),'\",\"ownerAliasUserName\":\"',parameters('sharePointFarmAccountUserName'),'\",\"secondaryOwnerAliasDomain\":\"',parameters('domainName'),'\",\"secondaryOwnerAliasUserName\":\"',parameters('adminUserName'),'\"}}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
           }
         },
@@ -252,11 +252,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spwebVMName'),'1/ConfigureSPWebServer')]",
+      "name": "[concat(parameters('spwebVMName')[1],'/ConfigureSPWebServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', parameters('spwebVMName'),'0/extensions/ConfigureSPWebServer')]"
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('spwebVMName')[0],'/extensions/ConfigureSPWebServer')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -291,10 +291,10 @@
             "databaseName":"[parameters('configDatabaseName')]",
             "administrationContentDatabaseName":"[parameters('administrationContentDatabaseName')]",
             "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
-            "primaryReplica":"[concat(parameters('sqlVMName'),'1')]",
-            "secondaryReplica":"[concat(parameters('sqlVMName'),'0')]",
+            "primaryReplica":"[parameters('sqlVMName')[1]]",
+            "secondaryReplica":"[parameters('sqlVMName')[0]]",
             "databaseNames":null,
-            "databaseServer":"[concat(parameters('sqlVMName'),'1.',parameters('domainName'))]",
+            "databaseServer":"[concat(parameters('sqlVMName')[1],'.',parameters('domainName'))]",
             "configuration":"[concat('{\"roles\":[{\"type\":\"web\",\"properties\":{\"webApp\":{\"name\":\"',parameters('sharepointFarmName'),'\",\"applicationPool\":\"',parameters('sharepointFarmName'),' AppPool\",\"applicationPoolAccount\":\"', parameters('sharePointFarmAccountUserName'),'\",\"url\":\"http://',parameters('sharepointWebfqdn'),'\",\"port\":80,\"hostHeader\":\"',parameters('sharepointWebfqdn'),'\",\"databaseName\":\"',parameters('contentDatabaseName'),'\"},\"site\":{\"name\":\"',parameters('sharepointFarmName'),'\",\"template\":\"',parameters('spSiteTemplateName'),'\",\"url\":\"http://',parameters('sharepointWebfqdn'),'\",\"ownerAliasDomain\":\"',parameters('domainName'),'\",\"ownerAliasUserName\":\"',parameters('sharePointFarmAccountUserName'),'\",\"secondaryOwnerAliasDomain\":\"',parameters('domainName'),'\",\"secondaryOwnerAliasUserName\":\"',parameters('adminUserName'),'\"}}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
           }
         },
