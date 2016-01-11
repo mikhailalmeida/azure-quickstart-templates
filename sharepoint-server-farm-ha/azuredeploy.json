@@ -1768,7 +1768,7 @@
                   "value":"[parameters('spAppVMName')]"
                },
                "sqlVMName":{
-                  "value":"[parameters('spWebVMName')]"
+                  "value":"[parameters('sqlVMName')]"
                },
                "location":{
                   "value":"[parameters('location')]"
