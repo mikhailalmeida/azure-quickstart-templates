@@ -1,65 +1,255 @@
 {
-  "location" : {
-    "value" :"westeurope"
+  "location": {
+    "value": "westeurope"
+  },
+  "storageAccountName": {
+    "value": [
+      "#####",
+      "#####",
+      "#####"
+    ]
+  },
+  "storageAccountDiagName": {
+    "value": "#####"
+  },
+  "storageAccountType": {
+    "value": "Standard_LRS"
+  },
+  "rdpIPAddressName": {
+    "value": "#####"
+  },
+  "rdpLoadBalancerName": {
+    "value": "#####"
+  },
+  "rdpLoadBalancerFEName": {
+    "value": "#####"
+  },
+  "adLoadBalancerBEName": {
+    "value": "#####"
+  },
+  "spWebIPAddressName": {
+    "value": "spWebIp"
+  },
+  "dnsPrefix": {
+    "value": "#####"
+  },
+  "spWebIPRGName": {
+    "value": "#####"
+  },
+  "spWebAdminIPAddressName": {
+    "value": "#####"
+  },
+  "dnsAdminPrefix": {
+    "value": "#####"
+  },
+  "availabilitySetADName": {
+    "value": "#####"
+  },
+  "availabilitySetSQLName": {
+    "value": "#####"
+  },
+  "availabilitySetSPWebName": {
+    "value": "#####"
+  },
+  "availabilitySetSPAppName": {
+    "value": "#####"
+  },
+  "virtualNetworkName": {
+    "value": "#####"
+  },
+  "virtualNetworkAddressRange": {
+    "value": "#####"
+  },
+  "spCALoadBalancerName": {
+    "value": "#####"
+  },
+  "spCALoadBalancerFEName": {
+    "value": "#####"
+  },
+  "spCALoadBalancerBEName": {
+    "value": "#####"
+  },
+  "spCANAT": {
+    "value": "#####"
+  },
+  "spWebLoadBalancerName": {
+    "value": "#####"
+  },
+  "spWebLoadBalancerFEName": {
+    "value": "#####"
+  },
+  "sqlLBIPAddress": {
+    "value": "#####"
+  },
+  "staticSubnetName": {
+    "value": "#####"
+  },
+  "staticSubnet": {
+    "value": "#####"
+  },
+  "spWebLoadBalancerBEName": {
+    "value": "#####"
+  },
+  "spWebLoadBalancerRuleName": {
+    "value": "#####"
+  },
+  "spWebProbeName": {
+    "value": "#####"
+  },
+  "sqlLoadBalancerName": {
+    "value": "#####"
+  },
+  "sqlLoadBalancerFEName": {
+    "value": "#####"
+  },
+  "sqlLoadBalancerBEName": {
+    "value": "#####"
+  },
+  "sqlProbeName": {
+    "value": "#####"
+  },
+  "adPDCNicName": {
+    "value": "#####"
+  },
+  "adPDCNICIPAddress": {
+    "value": "#####"
+  },
+  "adBDCNicName": {
+    "value": "#####"
+  },
+  "adBDCNICIPAddress": {
+    "value": "#####"
+  },
+  "sqlVMNICName": {
+    "value": [
+      "#####",
+      "#####"
+    ]
+  },
+  "sqlSubnetName": {
+    "value": "#####"
+  },
+  "sqlSubnet": {
+    "value": "#####"
+  },
+  "spWebVMNICName": {
+    "value": [
+      "#####",
+      "#####"
+    ]
+  },
+  "spWebSubnetName": {
+    "value": "#####"
+  },
+  "spWebSubnet": {
+    "value": "#####"
+  },
+  "spAppVMNICName": {
+    "value": [
+      "#####",
+      "#####"
+    ]
+  },
+  "spAppSubnetName": {
+    "value": "#####"
+  },
+  "spAppSubnet": {
+    "value": "#####"
+  },
+  "sqlWitnessVMNICName": {
+    "value": "#####"
+  },
+  "adPDCVMName": {
+    "value": "#####"
+  },
+  "adVMSize": {
+    "value": "Standard_D1"
   },
   "adminUsername": {
     "value": "#####"
   },
   "adminPassword": {
-    "value" : "#####"
+    "value": "#####"
   },
-  "sharepointFarmName" : {
-    "value":"SharepointFarm"
+  "domainName": {
+    "value": "contoso.local"
   },
-  "sqlServerServiceAccountUserName":{
+  "adBDCVMName": {
+    "value": "#####"
+  },
+  "sqlVMName": {
+    "value": [
+      "#####",
+      "#####"
+    ]
+  },
+  "sqlVMSize": {
+    "value": "Standard_D3"
+  },
+  "sqlAOEPName": {
+    "value": "#####"
+  },
+  "sqlServerServiceAccountUserName": {
     "value": "sqlservice"
   },
-  "sqlServerServiceAccountPassword":{
-    "value" : "#####"
+  "sqlServerServiceAccountPassword": {
+    "value": "#####"
   },
-  "sharePointSetupUserAccountUserName":{
+  "sharePointSetupUserAccountUserName": {
     "value": "spsetup"
   },
-  "sharePointSetupUserAccountPassword":{
-    "value" : "#####"
+  "sharePointSetupUserAccountPassword": {
+    "value": "#####"
   },
-  "sharePointFarmAccountPassword":{
+  "sqlClusterName": {
+    "value": "#####"
+  },
+  "sqlSharePathName": {
+    "value": "#####"
+  },
+  "sqlAOAGName": {
+    "value": "#####"
+  },
+  "sqlAOListenerName": {
+    "value": "#####"
+  },
+  "witnessVMSize": {
+    "value": "Standard_D1"
+  },
+  "sqlWitnessVMName": {
+    "value": "#####"
+  },
+  "spAppVMName": {
+    "value": [
+      "#####",
+      "#####"
+    ]
+  },
+  "spWebVMName": {
+    "value": [
+      "#####",
+      "#####"
+    ]
+  },
+  "spVMSize": {
+    "value": "Standard_D3"
+  },
+  "sharePointFarmAccountUserName": {
+    "value": "#####"
+  },
+  "sharePointFarmAccountPassword": {
     "value": "Admin123sp!farm"
   },
-  "sharePointFarmPassphrasePassword":{
+  "sharePointFarmPassphrasePassword": {
     "value": "#####"
   },
-  "spWebIPRGName" : {
-    "value" : ""
-  },
-  "spWebIPAddressName" : {
-    "value" : "spWebIp"
+  "sharepointFarmName": {
+    "value": "SharepointFarm"
   },
   "spWebIPNewOrExisting": {
-    "value" : "new"
+    "value": "new"
   },
-  "dnsPrefix": {
-    "value" : "#####"
-  },
-  "storageAccountNamePrefix": {
-    "value": "#####"
-  },
-  "storageAccountType": {
-    "value" : "Standard_LRS"
-  },
-  "adVMSize" : {
-    "value" : "Standard_D1"
-  },
-  "sqlVMSize" : {
-    "value" : "Standard_D3"
-  },
-  "witnessVMSize" : {
-    "value" : "Standard_D1"
-  },
-  "spVMSize" : {
-    "value" : "Standard_D3"
-  },
-  "domainName":{
-    "value":"contoso.local"
+  "baseUrl": {
+    "value": "https://raw.githubusercontent.com/mikhailalmeida/azure-quickstart-templates/custom_param/sharepoint-server-farm-ha/"
   }
 }
