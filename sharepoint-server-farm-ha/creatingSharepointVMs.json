@@ -104,7 +104,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',parameters('spappVMName')[copyindex()])]"
+              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',parameters('spappVMNICName')[copyindex()])]"
             }
           ]
         },
@@ -168,7 +168,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',parameters('spwebVMName')[copyindex()])]"
+              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',parameters('spwebVMNICName')[copyindex()])]"
             }
           ]
         },
