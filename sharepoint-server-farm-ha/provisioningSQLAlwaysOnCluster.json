@@ -207,7 +207,7 @@
           "domainName": "[parameters('domainName')]",
           "clusterName":"[parameters('clusterName')]",
           "sharePath":"[concat('\\\\',parameters('sqlwVMName'),'\\',parameters('sharePath'))]",
-          "nodes":["[(parameters('sqlVMName')[0]]","[parameters('sqlVMName')[1]]"],
+          "nodes":["[parameters('sqlVMName')[0]]","[parameters('sqlVMName')[1]]"],
           "sqlAlwaysOnEndpointName":"[parameters('sqlAOEPName')]",
           "sqlAlwaysOnAvailabilityGroupName":"[parameters('sqlAOAGName')]",
           "sqlAlwaysOnAvailabilityGroupListenerName":"[parameters('sqlAOListenerName')]",
