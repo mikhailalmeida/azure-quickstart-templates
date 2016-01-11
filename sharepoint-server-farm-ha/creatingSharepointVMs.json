@@ -83,7 +83,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spappVMName'), '-osdisk.vhd')]"
+              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spappVMName')[copyindex()], '-osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -91,9 +91,9 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spappVMName'), '-Data-1.vhd')]"
+                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spappVMName')[copyindex()], '-Data-1.vhd')]"
               },
-              "name":"[concat(parameters('spappVMName'), '-data-disk1')]",
+              "name":"[concat(parameters('spappVMName')[copyindex()], '-data-disk1')]",
               "caching" : "None",
               "createOption": "empty",
               "diskSizeGB": 128,
@@ -147,7 +147,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spwebVMName'), '-osdisk.vhd')]"
+              "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/',parameters('spwebVMName')[copyindex()], '-osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -155,9 +155,9 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spwebVMName'), '-Data-1.vhd')]"
+                "uri":"[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmContainerName'),'/', parameters('spwebVMName')[copyindex()], '-Data-1.vhd')]"
               },
-              "name":"[concat(parameters('spwebVMName'), '-data-disk1')]",
+              "name":"[concat(parameters('spwebVMName')[copyindex()], '-data-disk1')]",
               "caching" : "None",
               "createOption": "empty",
               "diskSizeGB": 128,
